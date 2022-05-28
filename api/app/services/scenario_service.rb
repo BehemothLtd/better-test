@@ -2,9 +2,7 @@ require "selenium-webdriver"
 require "json"
 
 class ScenarioService
-  attr_reader :result
-  attr_reader :message
-  attr_reader :index
+  attr_reader :result, :message, :index
 
   def initialize(driver, test_case)
     @driver = driver
