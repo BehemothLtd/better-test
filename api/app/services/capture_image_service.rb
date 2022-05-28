@@ -5,22 +5,30 @@ class CaptureImageService
 
   PATH = Rails.root.join("public/images")
 
-  def initialize(url, auth_id, selector_type, selector_path)
+  def initialize(url, scenario_id, selector_type, selector_path)
     @url = url
-    @auth = Scenario.find_by(id: auth_id)
+    @scenario = Scenario.find_by(id: scenario_id)
     @selector_type = selector_type
     @selector_path = selector_path
     initialize_driver
   end
 
   def execute!
-    @driver.get @url
-    ele = @driver.find_element(@selector_type, @selector_path)
+    if @scenario.present?
+      service = ::ScenarioService.new(@driver, @scenario)
+      service.execute!
+    end
+
+    @driver.navigate.to @url
+    wait = Selenium::WebDriver::Wait.new(timeout: 10)
+
+    ele = wait.until { @driver.find_element(@selector_type, @selector_path) }
     path = "images/#{SecureRandom.alphanumeric(8)}.jpg"
     full_path = Rails.root.join("public/#{path}")
     ele = ele.find_element(:xpath, "./..") if %w[input select].include?(ele.tag_name)
+    sleep(0.5)
     ele.save_screenshot(full_path)
-    @result = { url: "http://localhost:3000/#{path}" }
+    @result = { url: "#{ENV['API_HOST']}/#{path}" }
   ensure
     @driver&.quit
   end
@@ -29,6 +37,7 @@ class CaptureImageService
     options = ::Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
+    options.add_argument("--window-size=1400,4000")
     options.add_argument("--disable-gpu")
     options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36")
     options.add_argument("--hide-scrollbars")

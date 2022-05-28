@@ -7,8 +7,11 @@ module Api
     end
 
     def show
-      project = Project.find(params[:id]).screens
-      render json: project
+      project = Project.find(params[:id])
+      render json: {
+        screens: project.screens,
+        scenarios: project.scenarios
+      }
     end
   end
 end

@@ -17,16 +17,20 @@ module Api
 
     def update
       screen = Screen.find(params[:id])
-      begin
-        screen.update(screen_params)
-        render message "Updated"
-      end
+      screen.update(screen_params)
+      render json: screen
     end
 
     def destroy
       screen = Screen.find(params[:id])
       screen.destroy!
       render json: screen
+    end
+
+    def run_test_cases
+      service = ::RunTestCasesService.new(params[:id], params[:name])
+      service.execute!
+      render json: :ok
     end
 
     def screen_params
