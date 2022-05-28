@@ -1,0 +1,6 @@
+require "projects.schema"
+require "screens.schema"
+require "elements.schema"
+require "test_cases.schema"
+require "scenarios.schema"
+require "run_histories.schema"

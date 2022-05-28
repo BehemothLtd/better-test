@@ -1,0 +1,8 @@
+create_table "test_cases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+  t.string :name, null: false
+  t.text :url, null: false
+  t.integer :screen_id, null: false
+  t.text :steps, size: :medium, null: false
+
+  t.timestamps
+end

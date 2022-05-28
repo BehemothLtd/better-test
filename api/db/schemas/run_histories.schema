@@ -1,0 +1,6 @@
+create_table "run_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+  t.integer :test_case_id
+  t.integer :result
+
+  t.timestamps
+end
