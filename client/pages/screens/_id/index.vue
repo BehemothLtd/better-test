@@ -97,11 +97,14 @@ export default {
   },
 
   mounted() {
-    this.getScreen();
+    this.getScreen(this.$route.params.id);
     this.getTestCases();
   },
   computed: {
     ...mapState(["screen", "test_cases"]),
+    screenId() {
+      this.$route.params.id;
+    },
   },
   methods: {
     ...mapActions(["getScreen", "getTestCases"]),

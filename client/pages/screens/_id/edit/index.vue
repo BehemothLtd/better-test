@@ -104,7 +104,7 @@ export default {
   },
 
   mounted() {
-    this.getScreen();
+    this.getScreen(this.$route.params.id);
   },
 
   computed: {

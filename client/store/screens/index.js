@@ -17,14 +17,14 @@ export default {
   actions: {
     getScreen({ state, commit }, id) {
       try {
-        return this.$axios.get(`screens/1`).then((response) => {
+        return this.$axios.get(`screens/${id}`).then((response) => {
           commit(SET_SCREEN, response.data);
         });
       } catch (error) {}
     },
 
     getTestCases({ commit }, id) {
-      return this.$axios.get("screens/1/test_cases/").then((response) => {
+      return this.$axios.get(`screens/1/test_cases/`).then((response) => {
         commit(SET_ELEMENTS, response.data);
       });
     },
