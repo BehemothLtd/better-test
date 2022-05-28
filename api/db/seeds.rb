@@ -20,7 +20,6 @@ screen.save
 tc = screen.test_cases.build
 tc.url = "/console/reacts"
 tc.name = "test react"
-# js const steps = JSON.stringify(steps);
 tc.steps = [
   {
     "command": "open",
@@ -90,4 +89,59 @@ scenario.steps = [{
   "selector_path": ".breadcrumb-item > span",
   "value": "ダッシュボード"
 }]
+scenario.save
+
+scenario = Project.first.scenarios.build
+scenario.name = "product_groups_edit"
+scenario.url = "https://chaty:chaty@behemoth.liez.jp/console/product_groups"
+scenario.steps = [
+  {
+    "id": "f905e8ab-e799-4e6a-b7f1-24ea468b29ed",
+    "comment": "",
+    "command": "open",
+    "selector_type": "url",
+    "selector_path": "https://chaty:chaty@behemoth.liez.jp/console/product_groups",
+    "value": ""
+  },
+  {
+    "id": "8e2009ea-633d-4e9f-8301-81c1e21cea52",
+    "comment": "",
+    "command": "mouseOver",
+    "selector_type": "css",
+    "selector_path": "tr:nth-child(1) .text-primary > .mdi",
+    "value": ""
+  },
+  {
+    "id": "4cc7c437-79bf-4c98-be08-0cb70bc4765b",
+    "comment": "",
+    "command": "click",
+    "selector_type": "css",
+    "selector_path": "tr:nth-child(1) .text-primary > .mdi",
+    "value": ""
+  },
+  {
+    "id": "c1ab9f6a-6509-4bfc-ab90-2fd57fdaf865",
+    "comment": "",
+    "command": "type",
+    "selector_type": "xpath",
+    "selector_path": "//fieldset[2]/div/div/div/input",
+    "value": "test group 22"
+  },
+  {
+    "id": "140ee090-ef5f-48e0-b0bc-225801448e66",
+    "comment": "",
+    "command": "click",
+    "selector_type": "css",
+    "selector_path": ".btn-primary",
+    "value": ""
+  },
+  {
+    "id": "96f18c3b-ded7-4822-8ac5-61b8db0283de",
+    "comment": "",
+    "command": "waitForText",
+    "selector_type": "css",
+    "selector_path": ".toasted-container.top-right",
+    "value": "商品グループを更新しました"
+  }
+]
 scenario.save

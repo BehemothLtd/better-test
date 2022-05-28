@@ -42,8 +42,12 @@ group :development do
   gem "listen", "~> 3.3"
   gem "pry-rails"
   gem "spring"
+  gem "rspec"
+  gem "rspec-rails"
 end
 
+gem "active_model_serializers", "~> 0.10.0"
 gem "rack-cors"
 gem "ridgepole"
 gem "selenium-webdriver", "~> 4"
+gem "sidekiq"

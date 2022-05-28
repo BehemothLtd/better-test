@@ -1,7 +1,8 @@
 module Api
   class TestCasesController < ApplicationController
     def index
-      render json: TestCase.all
+      test_cases = Screen.find(params[:screen_id]).test_cases
+      render json: test_cases
     end
 
     def show

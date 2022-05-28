@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     resources :screens do
       resources :test_cases
     end
+    resources :test_sessions
   end
 end
