@@ -1,18 +1,18 @@
 module Api
   class ScreensController < ApplicationController
+    def index
+      render json: Screen.all
+    end
 
     def show
       screen = Screen.find(params[:id])
       elements = screen.elements
       render json: screen.serializable_hash.merge(elements: elements)
-
     end
 
     def create
-      begin
-        screen = Screen.create(screen_params)
-        render json: screen
-      end
+      screen = Screen.create(screen_params)
+      render json: screen
     end
 
     def update

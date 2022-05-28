@@ -66,7 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 0) do
     t.string "name", null: false
     t.integer "screen_id", null: false
     t.integer "project_id", null: false
-    t.integer "tottal", default: 0, null: false
+    t.integer "total", default: 0, null: false
     t.integer "passed_total", default: 0, null: false
     t.integer "failled_total", default: 0, null: false
     t.integer "status", default: 0, null: false
