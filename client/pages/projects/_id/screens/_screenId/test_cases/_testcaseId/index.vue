@@ -28,9 +28,7 @@
         <label>Step</label>
       </b-col>
       <b-col sm="10">
-        <b-button v-b-modal.modal-step-testcase variant="dark"
-          >+ Add Step</b-button
-        >
+        <b-button @click="show" variant="dark">+ Add Step</b-button>
       </b-col>
     </b-row>
 
@@ -41,9 +39,12 @@
       </b-col>
     </b-row>
 
-    <b-modal id="modal-step-testcase" modal-class="modal-type" hide-header>
-      <ModalStepTestcase></ModalStepTestcase>
-    </b-modal>
+    <ModalStepTestcase
+      id="modal-step-testcase"
+      modal-class="modal-type"
+      ref="stepTestCaseModal"
+      @submit="onSubmit"
+    ></ModalStepTestcase>
   </div>
 </template>
 <script>
@@ -69,8 +70,12 @@ export default {
   },
   components: { ModalStepTestcase },
   methods: {
-    showModal() {
-      this.$refs.modal - type.show();
+    show() {
+      this.$refs.stepTestCaseModal.show();
+    },
+
+    onSubmit(value) {
+      console.log(value);
     },
   },
   mounted() {},
