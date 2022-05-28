@@ -28,7 +28,7 @@ class CaptureImageService
     ele = ele.find_element(:xpath, "./..") if %w[input select].include?(ele.tag_name)
     sleep(0.5)
     ele.save_screenshot(full_path)
-    @result = { url: "http://localhost:3000/#{path}" }
+    @result = { url: "#{ENV['API_HOST']}/#{path}" }
   ensure
     @driver&.quit
   end
@@ -37,6 +37,7 @@ class CaptureImageService
     options = ::Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
+    options.add_argument("--window-size=1400,4000")
     options.add_argument("--disable-gpu")
     options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36")
     options.add_argument("--hide-scrollbars")
