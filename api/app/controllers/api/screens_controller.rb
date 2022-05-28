@@ -10,8 +10,6 @@ module Api
       begin
         screen = Screen.create(screen_params)
         render json: screen
-      rescue ActiveRecord::RecordNotUnique
-        render message: "Record already exists"
       end
     end
 
@@ -20,8 +18,6 @@ module Api
       begin
         screen.update(screen_params)
         render message "Updated"
-      rescue ActiveRecord::RecordNotUnique
-        render message: "Record already exists"
       end
     end
 
