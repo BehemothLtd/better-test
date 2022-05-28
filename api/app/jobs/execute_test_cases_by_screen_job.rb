@@ -1,5 +1,5 @@
 class ExecuteTestCasesByScreenJob < ApplicationJob
-  queue_as :general
+  queue_as :default
   sidekiq_options retry: false
 
   def perform(screen_id, name)
