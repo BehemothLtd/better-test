@@ -5,6 +5,11 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+return unless Rails.env.development?
+
+ActiveRecord::Base.connection.tables.each do |table|
+  ActiveRecord::Base.connection.truncate_tables(table.to_sym)
+end
 
 Project.create([{ name: "Chaty" }, { name: "Liverl" }])
 screen = Project.first.screens.build
@@ -15,11 +20,12 @@ screen.save
 tc = screen.test_cases.build
 tc.url = "/console/reacts"
 tc.name = "test react"
+# js const steps = JSON.stringify(steps);
 tc.steps = [
   {
     "command": "open",
     "selector_type": "url",
-    "selector_path": "/console/reacts/",
+    "selector_path": "https://chaty:chaty@behemoth.liez.jp/console/reacts/",
     "value": ""
   },
   {
@@ -59,3 +65,4 @@ tc.steps = [
     "value": "キーワード応答を更新しました"
   }
 ]
+tc.save
