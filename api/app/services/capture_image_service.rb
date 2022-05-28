@@ -5,16 +5,17 @@ class CaptureImageService
 
   PATH = Rails.root.join("public/images")
 
-  def initialize(url, auth_id, selector)
+  def initialize(url, auth_id, selector_type, selector_path)
     @url = url
     @auth = Scenario.auth.find_by(id: auth_id)
-    @selector = selector
+    @selector_type = selector_type
+    @selector_path = selector_path
     initialize_driver
   end
 
   def execute!
     @driver.get @url
-    ele = @driver.find_element(css: @selector)
+    ele = @driver.find_element(@selector_type, @selector_path)
     path = "images/#{SecureRandom.alphanumeric(8)}.jpg"
     full_path = Rails.root.join("public/#{path}")
     ele.save_screenshot(full_path)
