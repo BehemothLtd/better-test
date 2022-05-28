@@ -10,7 +10,7 @@ module Api
       project = Project.find(params[:id])
       render json: {
         screens: project.screens,
-        scenarios: project.scenarios,
+        scenarios: project.scenarios
       }
     end
   end

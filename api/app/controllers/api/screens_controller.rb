@@ -1,5 +1,9 @@
 module Api
   class ScreensController < ApplicationController
+    def index
+      render json: Screen.all
+    end
+
     def show
       screen = Screen.find(params[:id])
       elements = screen.elements
