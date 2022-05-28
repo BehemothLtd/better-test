@@ -18,8 +18,12 @@ module Api
     end
 
     def capture_image
-      service = ::CaptureImageService.new(params[:url], params[:auth_id], params[:selector_type],
-                                          params[:selector_path])
+      service = ::CaptureImageService.new(
+        params[:url],
+        params[:scenario_id],
+        params[:selector_type],
+        params[:selector_path]
+      )
       service.execute!
 
       render json: service.result

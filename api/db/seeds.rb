@@ -84,10 +84,10 @@ scenario.steps = [{
   "selector_type": "xpath",
   "selector_path": "//button[@type='submit']"
 }, {
-  "command": "waitForText",
+  "command": "wait",
   "selector_type": "css",
   "selector_path": ".breadcrumb-item > span",
-  "value": "ダッシュボード"
+  "value": ""
 }]
 scenario.save
 
