@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 0) do
   create_table "test_sessions", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.integer "screen_id", null: false
+    t.integer "project_id", null: false
     t.integer "tottal", default: 0, null: false
     t.integer "passed_total", default: 0, null: false
     t.integer "failled_total", default: 0, null: false

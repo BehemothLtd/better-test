@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
     resources :screens do
       resources :test_cases
-      resources :test_sessions
     end
+    resources :test_sessions
   end
 end
