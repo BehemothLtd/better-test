@@ -97,7 +97,7 @@ export default {
   },
 
   mounted() {
-    this.getScreen(this.$route.params.id);
+    this.getScreen(this.$route.params.screenId);
     this.getTestCases();
   },
   computed: {
