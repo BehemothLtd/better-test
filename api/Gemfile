@@ -45,4 +45,4 @@ group :development do
 end
 
 gem "ridgepole"
-gem "selenium-webdriver", "~> 3.142"
+gem "selenium-webdriver", "~> 4"
