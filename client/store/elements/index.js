@@ -1,5 +1,4 @@
 import { getField, updateField } from "vuex-map-fields";
-const SET_IMAGE_ELEMENT = "SET_IMAGE_ELEMENT";
 
 export default {
   namespaced: true,
@@ -20,24 +19,39 @@ export default {
   },
 
   actions: {
-    createElement({ state }) {
+    async createElement({ state, dispatch }, params) {
       try {
-        return this.$axios.post("elements", state.element);
+        await this.$axios.post("elements", params);
+        dispatch("screens/getScreen", {}, { root: true });
       } catch (error) {}
     },
-    capImage(params) {
-      return this.$axios
-        .post("elements/capture_image", params)
-        .then((response) => {
-          commit(SET_IMAGE_ELEMENT, response);
-        });
+    async capImage(_, params) {
+      try {
+        const res = await this.$axios.post("elements/capture_image", params);
+        return res;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateElement({ state, dispatch }, params) {
+      try {
+        await this.$axios.put(`elements/${params.id}`, params);
+        dispatch("screens/getScreen", {}, { root: true });
+      } catch (error) {}
+    },
+
+    async deleteElement({ dispatch }, id) {
+      try {
+        const res = await this.$axios.delete(`elements/${id}`);
+        if (res) {
+          this.$toast.success("Deleted");
+          dispatch("screens/getScreen", {}, { root: true });
+        }
+      } catch (error) {}
     },
   },
 
   mutations: {
     updateField,
-    SET_IMAGE_ELEMENT(state, payload) {
-      state.element.image = payload;
-    },
   },
 };

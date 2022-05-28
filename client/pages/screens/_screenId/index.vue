@@ -2,9 +2,13 @@
   <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center">
       <div class="h6 text-truncate mb-0">SCREEN DETAIL</div>
-      <b-button variant="white" class="p-2 cursor-pointer text-muted">
+      <nuxt-link
+        to="/screens/1"
+        variant="white"
+        class="p-2 cursor-pointer text-muted"
+      >
         <i class="mdi mdi-24px mdi mdi-pencil line-height-1"></i>
-      </b-button>
+      </nuxt-link>
     </div>
     <b-card class="mb-3">
       <template #header class="py-0 pr-0">
@@ -29,8 +33,9 @@
         small
         :items="screen.elements"
         :fields="elementFields"
+        outlined
       >
-        <template #cell(index)="data">{{ data.index }}</template>
+        <template #cell(index)="data">{{ data.index + 1 }}</template>
       </b-table>
     </b-card>
 
@@ -49,8 +54,14 @@
         </div>
       </template>
 
-      <b-table responsive small :items="test_cases" :fields="testCaseFields">
-        <template #cell(index)="data">{{ data.index }}</template>
+      <b-table
+        responsive
+        small
+        :items="test_cases"
+        :fields="testCaseFields"
+        outlined
+      >
+        <template #cell(index)="data">{{ data.index + 1 }}</template>
         <template #cell(actions)="data">
           <b-button class="btnAction" variant="white">
             <i class="mdi mdi-pencil"></i>
@@ -73,32 +84,39 @@ export default {
   data() {
     return {
       elementFields: [
-        { key: "index", label: "" },
+        { key: "index", label: "Num" },
         { key: "image", label: "Element Image" },
         { key: "name", label: "Element Name" },
       ],
       testCaseFields: [
-        { key: "index", label: "" },
+        { key: "index", label: "Num" },
         { key: "name", label: "Test case" },
-        { key: "actions", label: "Actions" },
+        { key: "actions", label: "Actions", thStyle: { width: "100px" } },
       ],
     };
   },
 
   mounted() {
-    this.getScreen();
-    this.getElements();
+    this.getScreen(this.$route.params.screenId);
+    this.getTestCases();
   },
   computed: {
     ...mapState(["screen", "test_cases"]),
+    screenId() {
+      this.$route.params.id;
+    },
   },
   methods: {
-    ...mapActions(["getScreen", "getElements"]),
+    ...mapActions(["getScreen", "getTestCases"]),
   },
 };
 </script>
 <style lang="scss">
 .btnAction {
   padding: 0;
+}
+::v-deep.card-header {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 </style>

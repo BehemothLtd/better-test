@@ -1,4 +1,3 @@
-
 Rails.application.routes.draw do
   require "sidekiq/web"
   Sidekiq::Web.use ActionDispatch::Cookies
