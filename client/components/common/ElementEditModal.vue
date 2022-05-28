@@ -71,7 +71,7 @@ export default {
   computed: {
     ...screenMapper.mapActions(["screen"]),
     screen_id() {
-      this.$route.params.id;
+      this.$route.params.screenId;
     },
   },
   methods: {
@@ -129,7 +129,7 @@ export default {
       this.resetModal();
       this.$refs.elementModal.isVisible = false;
     },
-    submit() {
+    async submit() {
       if (this.checkElement()) {
         if (this.isEdit) {
           const res = this.updateElement(this.element);
@@ -138,9 +138,9 @@ export default {
             this.$toast.success("Successfully");
           }
         } else {
-          const res = this.createElement({
+          const res = await this.createElement({
             ...this.element,
-            screen_id: this.$route.params.id,
+            screen_id: this.$route.params.screenId,
           });
           if (res) {
             this.hide();

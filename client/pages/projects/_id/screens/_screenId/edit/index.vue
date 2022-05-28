@@ -22,8 +22,8 @@
       </div>
     </b-card>
 
-    <b-card>
-      <template class="py-0" #header>
+    <b-card class="card-elements">
+      <template #header>
         <div class="d-flex justify-content-between align-items-center">
           <div class="h6 text-truncate mb-0">Elements</div>
           <b-button
@@ -137,7 +137,8 @@ export default {
         })
         .then((value) => {
           if (value) {
-            this.deleteElement(id);
+            const params = { ...this.screen, elementID: id };
+            this.deleteElement(params);
           }
         })
         .catch((err) => {
@@ -148,8 +149,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-::v-deep.card-header {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+.card-elements {
+  ::v-deep {
+    .card-header {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
 }
 </style>

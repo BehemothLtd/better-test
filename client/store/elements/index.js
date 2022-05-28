@@ -21,8 +21,10 @@ export default {
   actions: {
     async createElement({ state, dispatch }, params) {
       try {
-        await this.$axios.post("elements", params);
-        dispatch("screens/getScreen", {}, { root: true });
+        const res = await this.$axios.post("elements", params);
+
+        dispatch("screens/getScreen", params.screen_id, { root: true });
+        return res;
       } catch (error) {}
     },
     async capImage(_, params) {
@@ -36,16 +38,17 @@ export default {
     async updateElement({ state, dispatch }, params) {
       try {
         await this.$axios.put(`elements/${params.id}`, params);
-        dispatch("screens/getScreen", {}, { root: true });
+        dispatch("screens/getScreen", params.screen_id, { root: true });
       } catch (error) {}
     },
 
-    async deleteElement({ dispatch }, id) {
+    async deleteElement({ dispatch }, params) {
       try {
-        const res = await this.$axios.delete(`elements/${id}`);
+        console.log(params);
+        const res = await this.$axios.delete(`elements/${params.elementID}`);
         if (res) {
           this.$toast.success("Deleted");
-          dispatch("screens/getScreen", {}, { root: true });
+          dispatch("screens/getScreen", params.id, { root: true });
         }
       } catch (error) {}
     },
