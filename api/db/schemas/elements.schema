@@ -2,7 +2,7 @@ create_table "elements", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSE
   t.string :name, null: false
   t.string :selector_type, null: false, default: :css
   t.string :selector_path, null: false
-  t.string :image, null: false
+  t.string :image, null: true
   t.integer :screen_id, null: false
 
   t.timestamps
