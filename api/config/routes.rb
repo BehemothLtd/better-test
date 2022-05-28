@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       end
     end
     resources :projects, only: [:index, :show]
-    resources :screens, only: [:show, :create, :update, :destroy]
+    resources :screens do
+      resources :test_cases
+    end
   end
 end
