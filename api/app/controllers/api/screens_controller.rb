@@ -1,6 +1,5 @@
 module Api
   class ScreensController < ApplicationController
-
     def show
       screen = Screen.find(params[:id])
       elements = screen.elements
@@ -8,20 +7,25 @@ module Api
     end
 
     def create
-        screen = Screen.create(screen_params)
-        render json: screen
+      screen = Screen.create(screen_params)
+      render json: screen
     end
 
     def update
       screen = Screen.find(params[:id])
       screen.update(screen_params)
       render json: screen
-      end
+    end
 
     def destroy
       screen = Screen.find(params[:id])
       screen.destroy!
       render json: screen
+    end
+
+    def run_test_cases
+      ::ExecuteTestCasesByScreenJob.perform_now(params[:id], params[:name])
+      render json: :ok
     end
 
     def screen_params

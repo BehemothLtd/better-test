@@ -14,19 +14,13 @@ end
 Project.create([{ name: "Chaty" }, { name: "Liverl" }])
 screen = Project.first.screens.build
 screen.name = "React"
-screen.url = "/console/reacts"
+screen.url = "https://chaty:chaty@behemoth.liez.jp/console/reacts"
 screen.save
 
 tc = screen.test_cases.build
-tc.url = "/console/reacts"
-tc.name = "test react"
+tc.url = "https://chaty:chaty@behemoth.liez.jp/console/reacts"
+tc.name = "Create React"
 tc.steps = [
-  {
-    "command": "open",
-    "selector_type": "url",
-    "selector_path": "https://chaty:chaty@behemoth.liez.jp/console/reacts/",
-    "value": ""
-  },
   {
     "command": "click",
     "selector_type": "css",
@@ -46,7 +40,7 @@ tc.steps = [
     "value": ""
   },
   {
-    "command": "type",
+    "command": "input",
     "selector_type": "css",
     "selector_path": "#reactTextCollapse > .form-control",
     "value": "qqqqqqq"
@@ -58,7 +52,13 @@ tc.steps = [
     "value": ""
   },
   {
-    "command": "waitForText",
+    "command": "wait",
+    "selector_type": "css",
+    "selector_path": ".toasted-container.top-right",
+    "value": ""
+  },
+  {
+    "command": "assert",
     "selector_type": "css",
     "selector_path": ".toasted-container.top-right",
     "value": "キーワード応答を更新しました"
@@ -70,12 +70,12 @@ scenario = Project.first.scenarios.build
 scenario.name = "Login"
 scenario.url = "https://chaty:chaty@behemoth.liez.jp/users/sign_in"
 scenario.steps = [{
-  "command": "type",
+  "command": "input",
   "selector_type": "id",
   "selector_path": "email",
   "value": "truongnd@behemoth.vn"
 }, {
-  "command": "type",
+  "command": "input",
   "selector_type": "id",
   "selector_path": "password",
   "value": "12341234"
@@ -90,6 +90,7 @@ scenario.steps = [{
   "value": ""
 }]
 scenario.save
+screen.update(pre_script_id: scenario.id)
 
 scenario = Project.first.scenarios.build
 scenario.name = "product_groups_edit"
@@ -122,7 +123,7 @@ scenario.steps = [
   {
     "id": "c1ab9f6a-6509-4bfc-ab90-2fd57fdaf865",
     "comment": "",
-    "command": "type",
+    "command": "input",
     "selector_type": "xpath",
     "selector_path": "//fieldset[2]/div/div/div/input",
     "value": "test group 22"

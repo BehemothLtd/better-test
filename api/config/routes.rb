@@ -6,9 +6,12 @@ Rails.application.routes.draw do
         post :capture_image
       end
     end
-    resources :projects, only: [:index, :show]
+    resources :projects, only: %i[index show]
     resources :screens do
       resources :test_cases
+      member do
+        post :run_test_cases
+      end
     end
     resources :test_sessions
   end
