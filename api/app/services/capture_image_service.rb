@@ -7,7 +7,7 @@ class CaptureImageService
 
   def initialize(url, auth_id, selector_type, selector_path)
     @url = url
-    @auth = Scenario.auth.find_by(id: auth_id)
+    @auth = Scenario.find_by(id: auth_id)
     @selector_type = selector_type
     @selector_path = selector_path
     initialize_driver

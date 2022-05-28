@@ -45,5 +45,7 @@ group :development do
 end
 
 gem "active_model_serializers", "~> 0.10.0"
+gem "rack-cors"
 gem "ridgepole"
 gem "selenium-webdriver", "~> 4"
+gem "sidekiq"

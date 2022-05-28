@@ -66,3 +66,28 @@ tc.steps = [
   }
 ]
 tc.save
+
+scenario = Project.first.scenarios.build
+scenario.name = "Login"
+scenario.url = "https://chaty:chaty@behemoth.liez.jp/users/sign_in"
+scenario.steps = [{
+  "command": "type",
+  "selector_type": "id",
+  "selector_path": "email",
+  "value": "truongnd@behemoth.vn"
+}, {
+  "command": "type",
+  "selector_type": "id",
+  "selector_path": "password",
+  "value": "12341234"
+}, {
+  "command": "click",
+  "selector_type": "xpath",
+  "selector_path": "//button[@type='submit']"
+}, {
+  "command": "waitForText",
+  "selector_type": "css",
+  "selector_path": ".breadcrumb-item > span",
+  "value": "ダッシュボード"
+}]
+scenario.save
