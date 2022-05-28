@@ -2,7 +2,6 @@ create_table "scenarios", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARS
   t.string :name, null: false
   t.text :steps, size: :medium, null: false
   t.integer :project_id, null: false
-  t.integer :scenario_type, null: false
 
   t.timestamps
 end
