@@ -3,7 +3,9 @@ module Api
 
     def show
       screen = Screen.find(params[:id])
-      render json: screen
+      elements = screen.elements
+      render json: screen.serializable_hash.merge(elements: elements)
+
     end
 
     def create
