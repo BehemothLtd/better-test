@@ -42,6 +42,8 @@ group :development do
   gem "listen", "~> 3.3"
   gem "pry-rails"
   gem "spring"
+  gem "rspec"
+  gem "rspec-rails"
 end
 
 gem "ridgepole"
