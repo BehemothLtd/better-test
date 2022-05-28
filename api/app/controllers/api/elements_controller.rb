@@ -13,7 +13,7 @@ module Api
 
     def destroy
       element = Element.find(params[:id])
-      element.destroy!(element_params)
+      element.destroy!
       render json: element
     end
 
