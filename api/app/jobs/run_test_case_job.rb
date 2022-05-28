@@ -1,21 +1,13 @@
-class ExecuteTestCasesByScreenJob < ApplicationJob
+class RunTestCaseJob < ApplicationJob
   queue_as :default
   sidekiq_options retry: false
 
-  def perform(screen_id, name)
-    screen = ::Screen.find(screen_id)
-    test_cases = screen.test_cases
-    return if test_cases.blank?
+  def perform(test_session_id, test_case_id)
+    test_session = ::TestSession.find(test_session_id)
+    test_case = ::TestCase.find(test_case_id)
+    screen = ::Screen.find(test_case.screen_id)
 
     @driver = initialize_driver
-
-    test_session = TestSession.create(
-      name: name,
-      project_id: screen.project_id,
-      screen_id: screen_id,
-      total: test_cases.length,
-      status: :running
-    )
 
     if screen.pre_script.present?
       begin
@@ -29,24 +21,22 @@ class ExecuteTestCasesByScreenJob < ApplicationJob
       end
     end
 
-    test_cases.find_each do |test_case|
-      service = ::ScenarioService.new(@driver, test_case)
-      service.execute!
-      test_session.run_histories.create(
-        test_case_id: test_case.id,
-        result: service.result,
-        message: service.message
-      )
+    service = ::ScenarioService.new(@driver, test_case)
+    service.execute!
+    test_session.run_histories.create(
+      test_case_id: test_case.id,
+      result: service.result,
+      message: service.message
+    )
 
-      case service.result
-      when :passed
-        test_session.passed_total += 1
-      when :failed
-        test_session.failed_total += 1
-      end
+    case service.result
+    when :passed
+      test_session.passed_total += 1
+    when :failed
+      test_session.failed_total += 1
     end
 
-    test_session.status = :finished
+    test_session.status = :finished if test_session.passed_total + test_session.failed_total == test_session.total
     test_session.save
   ensure
     @driver&.quit

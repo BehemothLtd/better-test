@@ -24,7 +24,8 @@ module Api
     end
 
     def run_test_cases
-      ::ExecuteTestCasesByScreenJob.perform_later(params[:id], params[:name])
+      service = ::RunTestCasesService.new(params[:id], params[:name])
+      service.execute!
       render json: :ok
     end
 
