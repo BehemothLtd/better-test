@@ -23,11 +23,8 @@ module Api
 
     def destroy
       screen = Screen.find(params[:id])
-      if screen.destroy
-        render message "Destroyed"
-      else
-        render message "Can't destroy"
-      end
+      screen.destroy!
+      render json: screen
     end
 
     def screen_params
