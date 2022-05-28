@@ -24,7 +24,7 @@ module Api
     end
 
     def run_test_cases
-      ::ExecuteTestCasesByScreenJob.perform_now(params[:id], params[:name])
+      ::ExecuteTestCasesByScreenJob.perform_later(params[:id], params[:name])
       render json: :ok
     end
 
