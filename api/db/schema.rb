@@ -113,9 +113,9 @@ ActiveRecord::Schema[7.0].define(version: 0) do
 
   create_table "scenarios", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
+    t.text "url", null: false
     t.text "steps", size: :medium, null: false
     t.integer "project_id", null: false
-    t.integer "scenario_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
