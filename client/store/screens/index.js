@@ -23,7 +23,7 @@ export default {
       } catch (error) {}
     },
 
-    getElements({ commit }, id) {
+    getTestCases({ commit }, id) {
       return this.$axios.get("screens/1/test_cases/").then((response) => {
         commit(SET_ELEMENTS, response.data);
       });

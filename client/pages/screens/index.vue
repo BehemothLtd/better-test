@@ -29,6 +29,7 @@
         small
         :items="screen.elements"
         :fields="elementFields"
+        outlined
       >
         <template #cell(index)="data">{{ data.index }}</template>
       </b-table>
@@ -49,7 +50,13 @@
         </div>
       </template>
 
-      <b-table responsive small :items="test_cases" :fields="testCaseFields">
+      <b-table
+        responsive
+        small
+        :items="test_cases"
+        :fields="testCaseFields"
+        outlined
+      >
         <template #cell(index)="data">{{ data.index }}</template>
         <template #cell(actions)="data">
           <b-button class="btnAction" variant="white">
@@ -87,13 +94,13 @@ export default {
 
   mounted() {
     this.getScreen();
-    this.getElements();
+    this.getTestCases();
   },
   computed: {
     ...mapState(["screen", "test_cases"]),
   },
   methods: {
-    ...mapActions(["getScreen", "getElements"]),
+    ...mapActions(["getScreen", "getTestCases"]),
   },
 };
 </script>
