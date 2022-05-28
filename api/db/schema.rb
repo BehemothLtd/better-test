@@ -43,7 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 0) do
     t.string "name", null: false
     t.string "selector_type", default: "css", null: false
     t.string "selector_path", null: false
-    t.string "image", null: false
+    t.string "image"
     t.integer "screen_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
