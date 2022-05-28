@@ -18,6 +18,7 @@ class CaptureImageService
     ele = @driver.find_element(@selector_type, @selector_path)
     path = "images/#{SecureRandom.alphanumeric(8)}.jpg"
     full_path = Rails.root.join("public/#{path}")
+    ele = ele.find_element(:xpath, "./..") if %w[input select].include?(ele.tag_name)
     ele.save_screenshot(full_path)
     @result = { url: "http://localhost:3000/#{path}" }
   ensure
