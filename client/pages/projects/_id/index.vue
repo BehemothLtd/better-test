@@ -8,8 +8,8 @@
       </div>
       <table class="table table-centered table-nowrap">
         <tbody>
-          <tr v-for="(detail, index) in details" :key="index">
-            <td>{{ detail.name }}</td>
+          <tr v-for="(screen, index) in screens" :key="index">
+            <td>{{ screen.name }}</td>
             <td class="text-right">
               <nuxt-link
                 :to="`/projects/${projectId}/screens/${detail.id}`"
@@ -34,10 +34,20 @@
     <div class="table-scenarios mt-4">
       <div class="d-flex justify-content-between mb-2">
         <h5>Scenarios</h5>
-        <nuxt-link to="/">
-          <b-button v-b-modal.modal-step variant="dark">New</b-button>
-        </nuxt-link>
+        <b-button v-b-modal.modal-step variant="dark">New</b-button>
       </div>
+      <table class="table table-centered table-nowrap">
+        <tbody>
+          <tr v-for="(scenario, index) in scenarios" :key="index">
+            <td>{{ scenario.name }}</td>
+            <td class="text-right">
+              <nuxt-link to="/" class="mr-3 text-danger">
+                <i class="mdi mdi-trash-can-outline font-size-20"></i>
+              </nuxt-link>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -47,6 +57,8 @@ export default {
     return {
       details: [],
       projectId: "",
+      screens: [],
+      scenarios: [],
     };
   },
   computed: {},
@@ -55,6 +67,8 @@ export default {
     const res = await this.$axios.get("/projects/" + this.$route.params.id);
     this.details = res.data.screens;
     this.projectId = this.$route.params.id;
+    this.screens = res.data.screens;
+    this.scenarios = res.data.scenarios;
   },
 };
 </script>
