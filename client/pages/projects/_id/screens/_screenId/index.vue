@@ -86,13 +86,30 @@
         outlined
         class="screen-table"
       >
-        <template #cell(actions)="data" class="text-right">
-          <b-button class="btnAction" variant="white">
-            <i class="mdi mdi-pencil text-danger font-size-18"></i>
-          </b-button>
-          <b-button class="btnAction" variant="white">
-            <i class="mdi mdi-delete text-danger font-size-18"></i>
-          </b-button>
+        <template #cell(actions)="data">
+          <div class="d-flex align-items-center">
+            <nuxt-link
+              :to="`/projects/${projectId}/screens/${screenId}/test_cases/${data.item.id}`"
+              class="btnAction"
+              variant="white"
+            >
+              <i class="mdi mdi-pencil"></i>
+            </nuxt-link>
+            <b-button
+              class="btnAction"
+              variant="white ml-2"
+              @click="deleteTestCase(data.item.id)"
+            >
+              <i class="mdi mdi-delete"></i>
+            </b-button>
+            <span
+              role="button"
+              class="ml-2"
+              @click="runTestCase(data.item.id, data.item.name)"
+            >
+              <i class="mdi mdi-play-circle"></i>
+            </span>
+          </div>
         </template>
       </b-table>
     </b-card>
@@ -121,10 +138,10 @@ export default {
   },
 
   mounted() {
-    this.getScreen(this.$route.params.screenId);
-    this.getTestCases();
-    this.projectId = this.$route.params.id;
     this.screenId = this.$route.params.screenId;
+    this.getScreen(this.$route.params.screenId);
+    this.getTestCases(this.$route.params.screenId);
+    this.projectId = this.$route.params.id;
   },
   computed: {
     ...mapState(["screen", "test_cases"]),
@@ -144,6 +161,28 @@ export default {
         } catch {
           this.$toast.error("Failed");
         }
+      }
+    },
+
+    async deleteTestCase(id) {
+      try {
+        await this.$axios.delete(`/screens/${this.screenId}/test_cases/${id}`);
+        this.getTestCases(this.screenId);
+        this.$toast.success("Successfully");
+      } catch {
+        this.$toast.error("Failed");
+      }
+    },
+
+    async runTestCase(id, name) {
+      try {
+        await this.$axios.post(`/test_cases/${id}/run`, {
+          name: `Run ${name}`,
+        });
+        this.$toast.success("Successfully");
+        this.$router.push("/test_histories");
+      } catch {
+        this.$toast.error("Failed");
       }
     },
   },

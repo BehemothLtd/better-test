@@ -52,6 +52,11 @@ class ScenarioService
           break
         end
       end
+
+      # path = "images/#{SecureRandom.alphanumeric(8)}.jpg"
+      # full_path = Rails.root.join("public/#{path}")
+      # @driver.find_element(tag_name: "body").save_screenshot(full_path)
+      # puts "#{ENV['API_HOST']}/#{path}"
     end
 
     @result = :passed

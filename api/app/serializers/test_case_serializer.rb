@@ -1,3 +1,3 @@
 class TestCaseSerializer < ActiveModel::Serializer
-  attributes :name, :url, :steps
+  attributes :id, :name, :url, :steps
 end
