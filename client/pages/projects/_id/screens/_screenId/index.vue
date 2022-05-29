@@ -91,9 +91,20 @@
             >
               <i class="mdi mdi-pencil"></i>
             </nuxt-link>
-            <b-button class="btnAction" variant="white">
+            <b-button
+              class="btnAction"
+              variant="white ml-2"
+              @click="deleteTestCase(data.item.id)"
+            >
               <i class="mdi mdi-delete"></i>
             </b-button>
+            <span
+              role="button"
+              class="ml-2"
+              @click="runTestCase(data.item.id, data.item.name)"
+            >
+              <i class="mdi mdi-play-circle"></i>
+            </span>
           </div>
         </template>
       </b-table>
@@ -146,6 +157,28 @@ export default {
         } catch {
           this.$toast.error("Failed");
         }
+      }
+    },
+
+    async deleteTestCase(id) {
+      try {
+        await this.$axios.delete(`/screens/${this.screenId}/test_cases/${id}`);
+        this.getTestCases(this.screenId);
+        this.$toast.success("Successfully");
+      } catch {
+        this.$toast.error("Failed");
+      }
+    },
+
+    async runTestCase(id, name) {
+      try {
+        await this.$axios.post(`/test_cases/${id}/run`, {
+          name: `Run ${name}`,
+        });
+        this.$toast.success("Successfully");
+        this.$router.push("/test_histories");
+      } catch {
+        this.$toast.error("Failed");
       }
     },
   },

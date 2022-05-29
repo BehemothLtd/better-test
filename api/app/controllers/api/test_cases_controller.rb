@@ -27,10 +27,16 @@ module Api
       render message: "ok"
     end
 
+    def run
+      service = ::RunTestCaseService.new(params[:id], params[:name])
+      service.execute!
+      render json: :ok
+    end
+
     private
 
     def test_case_params
-      params.permit(:name, :url, steps: %i[command selector_type selector_path value element_id])
+      params.permit(:name, :url, steps: %i[command selector_type selector_path value name])
     end
   end
 end

@@ -21,5 +21,10 @@ Rails.application.routes.draw do
     end
     resources :test_sessions
     resources :scenarios
+    resources :test_cases do
+      member do
+        post :run
+      end
+    end
   end
 end

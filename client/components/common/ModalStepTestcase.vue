@@ -2,45 +2,50 @@
   <b-modal ref="modal" hide-header hide-footer>
     <b-row class="align-items-center mt-3">
       <b-col sm="3">
-        <label for="">Element</label>
-      </b-col>
-      <b-col sm="9">
-        <b-form-select
-          v-model="elementID"
-          text-field="name"
-          value-field="id"
-          :options="elementOptions"
-          @change="choseElement"
-        ></b-form-select>
-      </b-col>
-    </b-row>
-    <b-row class="align-items-center mt-3">
-      <b-col sm="3">
-        <label for="">Selector type</label>
-      </b-col>
-      <b-col sm="9">
-        <b-input v-model="step.selectorType"></b-input>
-      </b-col>
-    </b-row>
-    <b-row class="align-items-center mt-3">
-      <b-col sm="3">
-        <label for="">Selector path</label>
-      </b-col>
-      <b-col sm="9">
-        <b-input v-model="step.selectorPath"></b-input>
-      </b-col>
-    </b-row>
-    <b-row class="align-items-center mt-3">
-      <b-col sm="3">
         <label>Action :</label>
       </b-col>
       <b-col sm="9">
         <b-form-select
           v-model="step.command"
           :options="actions"
+          @change="onCommandChange"
         ></b-form-select>
       </b-col>
     </b-row>
+
+    <template v-if="step.command != 'open' && step.command != 'scenario'">
+      <b-row class="align-items-center mt-3">
+        <b-col sm="3">
+          <label>Element</label>
+        </b-col>
+        <b-col sm="9">
+          <b-form-select
+            v-model="elementId"
+            text-field="name"
+            value-field="id"
+            :options="elementOptions"
+            @change="choseElement"
+          ></b-form-select>
+        </b-col>
+      </b-row>
+      <b-row class="align-items-center mt-3">
+        <b-col sm="3">
+          <label for="">Selector type</label>
+        </b-col>
+        <b-col sm="9">
+          <b-input v-model="step.selector_type"></b-input>
+        </b-col>
+      </b-row>
+      <b-row class="align-items-center mt-3">
+        <b-col sm="3">
+          <label for="">Selector path</label>
+        </b-col>
+        <b-col sm="9">
+          <b-input v-model="step.selector_path"></b-input>
+        </b-col>
+      </b-row>
+    </template>
+
     <b-row v-if="step.command == 'open'" class="align-items-center mt-3">
       <b-col sm="3">
         <label>Value</label>
@@ -63,13 +68,10 @@
           <label>Wait for</label>
         </b-col>
         <b-col sm="9">
-          <b-form-select
-            v-model="selected_wait"
-            :options="waits"
-          ></b-form-select>
+          <b-form-select v-model="waitFor" :options="waits"></b-form-select>
         </b-col>
       </b-row>
-      <b-row v-if="selected_wait == 'seconds'" class="align-items-center mt-3">
+      <b-row v-if="waitFor == 'seconds'" class="align-items-center mt-3">
         <b-col sm="3">
           <label>Value</label>
         </b-col>
@@ -80,16 +82,6 @@
           </div>
         </b-col>
       </b-row>
-      <b-row v-else class="align-items-center mt-3">
-        <b-col sm="3">
-          <label>Element</label>
-        </b-col>
-        <b-col sm="9">
-          <div class="postion-relative">
-            <b-form-select></b-form-select>
-          </div>
-        </b-col>
-      </b-row>
     </div>
     <div v-if="step.command == 'scenario'">
       <b-row class="align-items-center mt-3">
@@ -97,21 +89,16 @@
           <label>Scenario</label>
         </b-col>
         <b-col sm="9">
-          <b-form-select></b-form-select>
+          <b-form-select
+            v-model="step.value"
+            :options="scenarios"
+            text-field="name"
+            value-field="id"
+          ></b-form-select>
         </b-col>
       </b-row>
     </div>
     <div v-if="step.command == 'assert'">
-      <b-row class="align-items-center mt-3">
-        <b-col sm="3">
-          <label>Element</label>
-        </b-col>
-        <b-col sm="9">
-          <div class="postion-relative">
-            <b-form-select></b-form-select>
-          </div>
-        </b-col>
-      </b-row>
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
           <label>Equal</label>
@@ -130,59 +117,122 @@
 import _ from "lodash";
 
 export default {
+  props: {
+    isScenario: false,
+  },
   data() {
     return {
       step: {
-        id: null,
+        name: "",
         command: "click",
         value: "",
-        selectorType: "",
-        selectorPath: "",
+        selector_type: "",
+        selector_path: "",
       },
-      elementID: "",
-      selected_wait: "element",
-      actions: [
-        { value: "click", text: "Click" },
-        { value: "open", text: "Open" },
-        { value: "input", text: "Input" },
-        { value: "wait", text: "Wait" },
-        { value: "scenario", text: "Scenario" },
-        { value: "assert", text: "Assert" },
-      ],
+      elementId: null,
       waits: [
         { value: "element", text: "Element" },
         { value: "seconds", text: "Seconds" },
       ],
       elementOptions: [],
+      scenarios: [],
+      editing: false,
     };
   },
+  computed: {
+    waitFor: {
+      get() {
+        if (this.step.selector_path && this.step.selector_type) {
+          return "element";
+        } else {
+          return "seconds";
+        }
+      },
+      set(value) {
+        if (value === "seconds") {
+          this.elementId = null;
+          this.step.selector_type = "";
+          this.step.selector_path = "";
+          this.step.name = "";
+        } else {
+          this.step.value = "";
+        }
+      },
+    },
+    actions() {
+      const actions = [
+        { value: "click", text: "Click" },
+        { value: "open", text: "Open" },
+        { value: "input", text: "Input" },
+        { value: "wait", text: "Wait" },
+        { value: "assert", text: "Assert" },
+      ];
 
+      if (!this.isScenario) {
+        return [...actions, { value: "scenario", text: "Scenario" }];
+      }
+
+      return actions;
+    },
+  },
+  mounted() {
+    this.fetchScenarios();
+  },
   methods: {
+    async show(data) {
+      const screenID = this.$route.params.screenId;
+      const res = await this.$axios.get(`screens/${screenID}`);
+      this.elementOptions = res.data.elements;
+      this.editing = !!data;
+      this.$refs.modal.show();
+      if (data) {
+        this.step = _.cloneDeep(data);
+      } else {
+        this.step = {
+          command: "click",
+          value: "",
+          selector_type: "",
+          selector_path: "",
+        };
+      }
+    },
     submit() {
-      this.$emit("submit", _.cloneDeep(this.step));
+      if (this.editing) {
+        this.$emit("update", this.step);
+      } else {
+        this.$emit("create", this.step);
+      }
       this.hide();
     },
-    resetModal() {
-      this.step.command = "click";
-      this.step.value = "";
+    async fetchScenarios() {
+      const res = await this.$axios.get(
+        `/scenarios?project_id=` + this.$route.params.id
+      );
+      this.scenarios = res.data;
     },
     hide() {
-      this.resetModal();
       this.$refs.modal.isVisible = false;
     },
-    async show() {
-      const screenID = this.$route.params.screenId;
-      const element = await this.$axios.get(`screens/${screenID}`);
-      this.elementOptions = element.data.elements;
-      this.$refs.modal.show();
-    },
-    choseElement() {
-      const seletedElement = this.elementOptions.filter(
-        (item) => item.id === this.elementID
-      );
-      this.step.selectorType = seletedElement[0].selector_type;
+    choseElement(value) {
+      const selected = this.elementOptions.find((item) => item.id === value);
 
-      this.step.selectorPath = seletedElement[0].selector_path;
+      if (selected) {
+        this.step.selector_type = selected.selector_type;
+        this.step.selector_path = selected.selector_path;
+        this.step.name = selected.name;
+      } else {
+        this.step.selector_type = "";
+        this.step.selector_path = "";
+        this.step.name = "";
+      }
+    },
+    onCommandChange(value) {
+      switch (value) {
+        case "open":
+        case "scenario":
+          this.step.name = "";
+          break;
+      }
     },
   },
 };
