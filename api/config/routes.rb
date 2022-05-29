@@ -20,5 +20,6 @@ Rails.application.routes.draw do
       end
     end
     resources :test_sessions
+    resources :scenarios
   end
 end

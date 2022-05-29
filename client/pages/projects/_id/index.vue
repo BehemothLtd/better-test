@@ -23,9 +23,13 @@
               >
                 <i class="mdi mdi-pencil font-size-20"></i>
               </nuxt-link>
-              <nuxt-link to="/" class="mr-3 text-danger">
+              <span
+                role="button"
+                class="mr-3 text-danger"
+                @click="deleteScreen(screen.id)"
+              >
                 <i class="mdi mdi-trash-can-outline font-size-20"></i>
-              </nuxt-link>
+              </span>
             </td>
           </tr>
         </tbody>
@@ -41,9 +45,19 @@
           <tr v-for="(scenario, index) in scenarios" :key="index">
             <td>{{ scenario.name }}</td>
             <td class="text-right">
-              <nuxt-link to="/" class="mr-3 text-danger">
-                <i class="mdi mdi-trash-can-outline font-size-20"></i>
+              <nuxt-link
+                :to="`/projects/${projectId}/scenarios/${scenario.id}`"
+                class="mr-3 text-primary"
+              >
+                <i class="mdi mdi-pencil font-size-20"></i>
               </nuxt-link>
+              <span
+                role="button"
+                class="mr-3 text-danger"
+                @click="deleteScenario(scenario.id)"
+              >
+                <i class="mdi mdi-trash-can-outline font-size-20"></i>
+              </span>
             </td>
           </tr>
         </tbody>
@@ -60,13 +74,28 @@ export default {
       scenarios: [],
     };
   },
-  computed: {},
-  async mounted() {
-    console.log(this.$route.params.id);
-    const res = await this.$axios.get("/projects/" + this.$route.params.id);
-    this.projectId = this.$route.params.id;
-    this.screens = res.data.screens;
-    this.scenarios = res.data.scenarios;
+  mounted() {
+    this.fetchProject();
+  },
+  methods: {
+    async fetchProject() {
+      const res = await this.$axios.get("/projects/" + this.$route.params.id);
+      this.projectId = this.$route.params.id;
+      this.screens = res.data.screens;
+      this.scenarios = res.data.scenarios;
+    },
+    async deleteScreen(screenId) {
+      if (window.confirm("Delete this?")) {
+        await this.$axios.delete("/screens/" + screenId);
+        this.fetchProject();
+      }
+    },
+    async deleteScenario(scenarioId) {
+      if (window.confirm("Delete this?")) {
+        await this.$axios.delete("/scenarios/" + scenarioId);
+        this.fetchProject();
+      }
+    },
   },
 };
 </script>
