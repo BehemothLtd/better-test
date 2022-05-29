@@ -1,10 +1,10 @@
 <template>
   <div>
     <b-row class="align-items-center">
-      <b-col sm="2">
-        <label>Name</label>
+      <b-col sm="3">
+        <label class="font-weight-bold">Name</label>
       </b-col>
-      <b-col sm="10">
+      <b-col sm="9">
         <b-input-group class="v-group mt-2 mb-1">
           <b-input v-model="form.name" placeholder=""></b-input>
         </b-input-group>
@@ -12,10 +12,10 @@
     </b-row>
 
     <b-row class="align-items-center mb-2">
-      <b-col sm="2">
-        <label>URL</label>
+      <b-col sm="3">
+        <label class="font-weight-bold">URL</label>
       </b-col>
-      <b-col sm="10">
+      <b-col sm="9">
         <b-input-group class="v-group mt-2 mb-1">
           <b-input v-model="form.url" placeholder="https://"></b-input>
         </b-input-group>
@@ -23,15 +23,17 @@
     </b-row>
 
     <b-row class="align-items-center mt-2">
-      <b-col sm="2">
-        <label>Step</label>
+      <b-col sm="3">
+        <label class="font-weight-bold">Step</label>
       </b-col>
-      <b-col sm="10">
-        <b-button @click="addStep" variant="dark">+ Add Step</b-button>
+      <b-col sm="9">
+        <b-button @click="addStep" variant="outline-success"
+          >+ Add Step</b-button
+        >
       </b-col>
     </b-row>
 
-    <table class="table table-bordered mt-3">
+    <table class="table table-bordered mt-4">
       <thead>
         <tr>
           <td>Action</td>
@@ -47,10 +49,10 @@
           <td>{{ step.value }}</td>
           <td>
             <span role="button" @click="editStep(step, index)">
-              <i class="mdi mdi-pencil"></i>
+              <i class="mdi mdi-pencil text-success font-size-20"></i>
             </span>
             <span role="button" @click="removeStep(index)">
-              <i class="mdi mdi-delete"></i>
+              <i class="mdi mdi-delete text-success font-size-20"></i>
             </span>
           </td>
         </tr>
@@ -59,7 +61,9 @@
 
     <b-row class="align-items-center mt-2 text-right">
       <b-col sm="12">
-        <b-button variant="success" @click="saveForm">Save</b-button>
+        <b-button variant="success" @click="saveForm" class="w-100px"
+          >Save</b-button
+        >
       </b-col>
     </b-row>
 
@@ -129,5 +133,11 @@ export default {
   position: absolute;
   top: 5px;
   right: 20px;
+}
+.w-100px {
+  width: 100px;
+}
+.font-size-20 {
+  font-size: 20px;
 }
 </style>

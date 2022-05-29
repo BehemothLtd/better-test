@@ -1,44 +1,43 @@
 <template>
-  <b-card>
-    <template #header class="py-0 pr-0">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="h6 text-truncate mb-0">TEST HISTORY</div>
+  <div>
+    <div class="container">
+      <div class="text-center my-4">
+        <span class="history-title">Test History</span>
       </div>
-    </template>
-    <form class="d-flex">
-      <b-form-select
-        class="mb-3 select-option"
-        v-model="projectId"
-        :options="options"
-        value-field="id"
-        text-field="name"
-        @change="onOption(projectId)"
-      ></b-form-select>
+      <form class="d-flex py-4">
+        <b-form-select
+          class="select-option"
+          v-model="projectId"
+          :options="options"
+          value-field="id"
+          text-field="name"
+          @change="onOption(projectId)"
+        ></b-form-select>
 
-      <b-form-select
-        class="mb-3 select-option"
-        v-model="screenId"
-        :options="screenOptions"
-        value-field="id"
-        text-field="name"
-      ></b-form-select>
+        <b-form-select
+          class="select-option"
+          v-model="screenId"
+          :options="screenOptions"
+          value-field="id"
+          text-field="name"
+        ></b-form-select>
 
-      <b-button
-        class="mb-3 ml-4"
-        type="submit"
-        variant="primary"
-        @click.prevent="submitSearch"
-        >Search</b-button
-      >
-    </form>
-
-    <b-table responsive small :items="test_sessions" :fields="testSessions">
-      <template #cell(index)="data">{{ data.index + 1 }} </template>
-      <template #cell(name)="data">
-        <a :href="`/test_histories/${data.item.id}`">{{ data.item.name }}</a>
-      </template>
-    </b-table>
-  </b-card>
+        <b-button
+          class="ml-4 w-100px"
+          type="submit"
+          variant="success"
+          @click.prevent="submitSearch"
+          >Search</b-button
+        >
+      </form>
+      <b-table responsive small :items="test_sessions" :fields="testSessions" class="history-table">
+        <template #cell(index)="data">{{ data.index + 1 }} </template>
+        <template #cell(name)="data">
+          <a :href="`/test_histories/${data.item.id}`">{{ data.item.name }}</a>
+        </template>
+      </b-table>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -95,5 +94,16 @@ export default {
 .select-option {
   width: 30%;
   margin-left: 10px;
+}
+.history-title {
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(0deg, #a2eab3 35%, rgba(245, 248, 244, 0) 0);
+}
+.w-100px {
+  width: 100px;
+}
+.history-table th {
+  background-color: #d4edda;
 }
 </style>

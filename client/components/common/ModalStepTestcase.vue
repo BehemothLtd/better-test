@@ -2,7 +2,7 @@
   <b-modal ref="modal" hide-header hide-footer>
     <b-row class="align-items-center mt-3">
       <b-col sm="3">
-        <label>Action :</label>
+        <label class="font-weight-bold">Action :</label>
       </b-col>
       <b-col sm="9">
         <b-form-select
@@ -16,7 +16,7 @@
     <template v-if="step.command != 'open' && step.command != 'scenario'">
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Element</label>
+          <label class="font-weight-bold">Element</label>
         </b-col>
         <b-col sm="9">
           <b-form-select
@@ -30,7 +30,7 @@
       </b-row>
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label for="">Selector type</label>
+          <label class="font-weight-bold" for="">Selector type</label>
         </b-col>
         <b-col sm="9">
           <b-input v-model="step.selector_type"></b-input>
@@ -38,7 +38,7 @@
       </b-row>
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label for="">Selector path</label>
+          <label class="font-weight-bold" for="">Selector path</label>
         </b-col>
         <b-col sm="9">
           <b-input v-model="step.selector_path"></b-input>
@@ -48,7 +48,7 @@
 
     <b-row v-if="step.command == 'open'" class="align-items-center mt-3">
       <b-col sm="3">
-        <label>Value</label>
+        <label class="font-weight-bold">Value</label>
       </b-col>
       <b-col sm="9">
         <b-input v-model="step.value" placeholder="http://asdasd"></b-input>
@@ -56,7 +56,7 @@
     </b-row>
     <b-row v-if="step.command == 'input'" class="align-items-center mt-3">
       <b-col sm="3">
-        <label>Value</label>
+        <label class="font-weight-bold">Value</label>
       </b-col>
       <b-col sm="9">
         <b-input v-model="step.value" placeholder="value"></b-input>
@@ -65,7 +65,7 @@
     <div v-if="step.command == 'wait'">
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Wait for</label>
+          <label class="font-weight-bold">Wait for</label>
         </b-col>
         <b-col sm="9">
           <b-form-select v-model="waitFor" :options="waits"></b-form-select>
@@ -73,7 +73,7 @@
       </b-row>
       <b-row v-if="waitFor == 'seconds'" class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Value</label>
+          <label class="font-weight-bold">Value</label>
         </b-col>
         <b-col sm="9">
           <div class="postion-relative">
@@ -86,7 +86,7 @@
     <div v-if="step.command == 'scenario'">
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Scenario</label>
+          <label class="font-weight-bold">Scenario</label>
         </b-col>
         <b-col sm="9">
           <b-form-select
@@ -101,7 +101,7 @@
     <div v-if="step.command == 'assert'">
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Equal</label>
+          <label class="font-weight-bold">Equal</label>
         </b-col>
         <b-col sm="9">
           <b-input v-model="step.value" placeholder="value"></b-input>
@@ -109,7 +109,7 @@
       </b-row>
     </div>
     <div class="mt-3 text-right">
-      <b-button variant="primary" @click="submit">Submit</b-button>
+      <b-button variant="success" @click="submit">Submit</b-button>
     </div>
   </b-modal>
 </template>

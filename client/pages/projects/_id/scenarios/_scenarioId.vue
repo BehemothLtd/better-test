@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h4 class="my-4 text-center">UPDATE SCENARIO</h4>
+    <div class="text-center my-4">
+      <span class="scenario-title">Update Scenario</span>
+    </div>
     <ScenarioForm :form="scenario" is-scenario @save="save"></ScenarioForm>
   </div>
 </template>
@@ -50,3 +52,10 @@ export default {
   },
 };
 </script>
+<style>
+.scenario-title {
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(0deg, #a2eab3 35%, rgba(245, 248, 244, 0) 0);
+}
+</style>

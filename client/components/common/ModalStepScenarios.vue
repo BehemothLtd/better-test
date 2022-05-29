@@ -2,7 +2,7 @@
   <div>
     <b-row class="align-items-center mt-3">
       <b-col sm="3">
-        <label>Action :</label>
+        <label class="font-weight-bold">Action :</label>
       </b-col>
       <b-col sm="9">
         <b-form-select
@@ -13,7 +13,7 @@
     </b-row>
     <b-row v-if="selected_action == 'input'" class="align-items-center mt-3">
       <b-col sm="3">
-        <label>Value</label>
+        <label class="font-weight-bold">Value</label>
       </b-col>
       <b-col sm="9">
         <b-input placeholder="value"></b-input>
@@ -22,7 +22,7 @@
     <div v-if="selected_action == 'wait'">
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Wait for</label>
+          <label class="font-weight-bold">Wait for</label>
         </b-col>
         <b-col sm="9">
           <b-form-select
@@ -33,7 +33,7 @@
       </b-row>
       <b-row v-if="selected_wait == 'seconds'" class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Value</label>
+          <label class="font-weight-bold">Value</label>
         </b-col>
         <b-col sm="9">
           <div class="postion-relative">
@@ -46,7 +46,7 @@
     <div v-if="selected_action == 'scenario'">
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Value</label>
+          <label class="font-weight-bold">Value</label>
         </b-col>
         <b-col sm="9">
           <b-form-select></b-form-select>
@@ -56,7 +56,7 @@
     <div v-if="selected_action == 'assert'">
       <b-row class="align-items-center mt-3">
         <b-col sm="3">
-          <label>Equal</label>
+          <label class="font-weight-bold">Equal</label>
         </b-col>
         <b-col sm="9">
           <b-input placeholder="value"></b-input>
