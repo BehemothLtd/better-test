@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <h4 class="my-4 text-center">CREATE TESTCASE</h4>
+    <div class="my-4 text-center">
+      <span class="create-title">Create Testcase</span>
+    </div>
     <ScenarioForm :form="testCase" @save="saveTestCase"></ScenarioForm>
   </div>
 </template>
@@ -51,3 +53,10 @@ export default {
   },
 };
 </script>
+<style>
+.create-title {
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(0deg, #a2eab3 35%, rgba(245, 248, 244, 0) 0);
+}
+</style>
