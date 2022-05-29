@@ -1,12 +1,12 @@
 <template>
-  <b-card>
-    <template #header class="py-0 pr-0">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="h6 text-truncate mb-0">TEST HISTORY</div>
+  <div>
+    <div class="container">
+      <div class="text-center my-4">
+        <span class="asult-title">Test History</span>
       </div>
-    </template>
+    </div>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered table-asult">
       <thead>
         <tr>
           <th>Case</th>
@@ -21,7 +21,7 @@
         :record="ts"
       ></TestCaseResultDetail>
     </table>
-  </b-card>
+  </div>
 </template>
 
 <script>
@@ -53,3 +53,13 @@ export default {
   components: { TestCaseResultDetail },
 };
 </script>
+<style>
+.asult-title {
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(0deg, #79d8e8 35%, rgba(245, 248, 244, 0) 0);
+}
+.table-asult th {
+  background-color: #d1ecf1;
+}
+</style>
