@@ -9,6 +9,12 @@
           </b-alert>
         </nuxt-link>
       </div>
+
+      <div>
+        <nuxt-link to="/test_histories">
+          <b-alert variant="info" show class="d-flex"> Test Histories </b-alert>
+        </nuxt-link>
+      </div>
     </div>
   </div>
 </template>
