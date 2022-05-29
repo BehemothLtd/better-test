@@ -1,45 +1,47 @@
 <template>
-  <div class="container-fluid">
-    <b-card class="mb-3">
-      <template #header class="py-0 pr-0">
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="h6 text-truncate mb-0">Screen</div>
-        </div>
-      </template>
+  <div class="container">
+    <div class="text-center my-4">
+      <span class="screens-title">Screen</span>
+    </div>
 
-      <div>
-        <div class="mb-2">
-          Name:
+    <div>
+      <div class="mb-2 d-flex">
+        <b-col sm="3" class="font-weight-bold"> Name: </b-col>
+        <b-col sm="9">
           <b-input v-model="name"></b-input>
-        </div>
+        </b-col>
+      </div>
 
-        <div class="mb-2">
-          Url:
+      <div class="mb-2 d-flex">
+        <b-col sm="3" class="font-weight-bold"> Url: </b-col>
+        <b-col sm="9">
           <b-input v-model="url"></b-input>
-        </div>
+        </b-col>
+      </div>
 
-        <label class="mb-2"
-          >Pre-script Scenario:
+      <div class="mb-2 d-flex">
+        <b-col sm="3" class="font-weight-bold"> Pre-script Scenario: </b-col>
+        <b-col sm="9">
           <b-select
             v-model="preScriptId"
             :options="scenarios"
             text-field="name"
             value-field="id"
           ></b-select>
-        </label>
+        </b-col>
       </div>
-    </b-card>
+    </div>
 
-    <b-card class="card-elements mb-3">
+    <b-card class="card-elements mt-5 card-screens">
       <template #header>
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center bg-screens">
           <div class="h6 text-truncate mb-0">Elements</div>
           <b-button
             variant="white"
             class="p-2 cursor-pointer text-muted"
             @click="show(!isEdit, { url: url })"
           >
-            <i class="mdi mdi-24px mdi-plus-circle line-height-1"></i>
+            <i class="mdi mdi-24px mdi-plus-circle line-height-1 text-warning"></i>
           </b-button>
         </div>
       </template>
@@ -72,7 +74,7 @@
     </b-card>
 
     <div class="text-right">
-      <b-button variant="primary" @click="save">Save</b-button>
+      <b-button variant="warning" class="text-white w-100px mt-3" @click="save">Save</b-button>
     </div>
 
     <ElementEditModalVue ref="elementModal"></ElementEditModalVue>
@@ -187,5 +189,16 @@ export default {
       padding-bottom: 0;
     }
   }
+}
+.screens-title {
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(0deg, #ffdf78 35%, rgba(245, 248, 244, 0) 0);
+}
+.card-screens .card-header {
+  background-color: #fff3cd;
+}
+.w-100px {
+  width: 100px;
 }
 </style>

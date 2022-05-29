@@ -1,27 +1,36 @@
 <template>
   <div class="container">
-    <h4 class="text-center my-4">Project Detail</h4>
+    <div class="text-center my-4">
+      <span class="project-title">Project Detail</span>
+    </div>
     <div class="table-screen">
-      <div class="d-flex justify-content-between mb-2">
-        <h5>Screen</h5>
-        <b-button :to="`/projects/${projectId}/screens/new`" variant="dark"
-          >New</b-button
-        >
-      </div>
       <table class="table table-centered table-nowrap">
+        <thead>
+          <tr>
+            <th class="align-middle">Screen</th>
+            <th class="text-right">
+              <b-button
+                :to="`/projects/${projectId}/screens/new`"
+                variant="info"
+                class="w-100px"
+                >New</b-button
+              >
+            </th>
+          </tr>
+        </thead>
         <tbody>
           <tr v-for="(screen, index) in screens" :key="index">
             <td>{{ screen.name }}</td>
             <td class="text-right">
               <nuxt-link
                 :to="`/projects/${projectId}/screens/${screen.id}`"
-                class="mr-3 text-primary"
+                class="mr-3 text-dark"
               >
                 <i class="mdi mdi-magnify font-size-20"></i>
               </nuxt-link>
               <nuxt-link
                 :to="`/projects/${projectId}/screens/${screen.id}/edit`"
-                class="mr-3 text-primary"
+                class="mr-3 text-dark"
               >
                 <i class="mdi mdi-pencil font-size-20"></i>
               </nuxt-link>
@@ -37,19 +46,25 @@
         </tbody>
       </table>
     </div>
-    <div class="table-scenarios mt-4">
-      <div class="d-flex justify-content-between mb-2">
-        <h5>Scenarios</h5>
-        <b-button v-b-modal.modal-step variant="dark">New</b-button>
-      </div>
+    <div class="table-scenarios mt-5">
       <table class="table table-centered table-nowrap">
+        <thead>
+          <tr>
+            <th class="align-middle">Scenarios</th>
+            <th class="text-right">
+              <b-button v-b-modal.modal-step variant="info" class="w-100px"
+                >New</b-button
+              >
+            </th>
+          </tr>
+        </thead>
         <tbody>
           <tr v-for="(scenario, index) in scenarios" :key="index">
             <td>{{ scenario.name }}</td>
             <td class="text-right">
               <nuxt-link
                 :to="`/projects/${projectId}/scenarios/${scenario.id}`"
-                class="mr-3 text-primary"
+                class="mr-3 text-dark"
               >
                 <i class="mdi mdi-pencil font-size-20"></i>
               </nuxt-link>
@@ -102,13 +117,26 @@ export default {
 };
 </script>
 <style>
+.project-title {
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(0deg, #79d8e8 35%, rgba(245, 248, 244, 0) 0);
+}
+
 .font-size-20 {
   font-size: 20px;
 }
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+.table-screen tr th {
+  /* background-color: #f8d7da; */
+  background-color: #d1ecf1;
+}
+tr td {
+  background-color: #f9f9f9;
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.w-100px {
+  width: 100px;
 }
 </style>
