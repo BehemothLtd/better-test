@@ -86,7 +86,6 @@ export default {
 
     onSubmit(value) {
       this.testCase.steps = [...this.testCase.steps, value];
-      console.log(this.testCase.steps);
     },
     async saveTestCase() {
       const screenId = this.$route.params.screenId;

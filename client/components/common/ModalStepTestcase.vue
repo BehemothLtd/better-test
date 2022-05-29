@@ -2,6 +2,36 @@
   <b-modal ref="modal" hide-header hide-footer>
     <b-row class="align-items-center mt-3">
       <b-col sm="3">
+        <label for="">Element</label>
+      </b-col>
+      <b-col sm="9">
+        <b-form-select
+          v-model="elementID"
+          text-field="name"
+          value-field="id"
+          :options="elementOptions"
+          @change="choseElement"
+        ></b-form-select>
+      </b-col>
+    </b-row>
+    <b-row class="align-items-center mt-3">
+      <b-col sm="3">
+        <label for="">Selector type</label>
+      </b-col>
+      <b-col sm="9">
+        <b-input v-model="step.selectorType"></b-input>
+      </b-col>
+    </b-row>
+    <b-row class="align-items-center mt-3">
+      <b-col sm="3">
+        <label for="">Selector path</label>
+      </b-col>
+      <b-col sm="9">
+        <b-input v-model="step.selectorPath"></b-input>
+      </b-col>
+    </b-row>
+    <b-row class="align-items-center mt-3">
+      <b-col sm="3">
         <label>Action :</label>
       </b-col>
       <b-col sm="9">
@@ -98,13 +128,18 @@
 </template>
 <script>
 import _ from "lodash";
+
 export default {
   data() {
     return {
       step: {
+        id: null,
         command: "click",
         value: "",
+        selectorType: "",
+        selectorPath: "",
       },
+      elementID: "",
       selected_wait: "element",
       actions: [
         { value: "click", text: "Click" },
@@ -118,8 +153,10 @@ export default {
         { value: "element", text: "Element" },
         { value: "seconds", text: "Seconds" },
       ],
+      elementOptions: [],
     };
   },
+
   methods: {
     submit() {
       this.$emit("submit", _.cloneDeep(this.step));
@@ -133,8 +170,19 @@ export default {
       this.resetModal();
       this.$refs.modal.isVisible = false;
     },
-    show() {
+    async show() {
+      const screenID = this.$route.params.screenId;
+      const element = await this.$axios.get(`screens/${screenID}`);
+      this.elementOptions = element.data.elements;
       this.$refs.modal.show();
+    },
+    choseElement() {
+      const seletedElement = this.elementOptions.filter(
+        (item) => item.id === this.elementID
+      );
+      this.step.selectorType = seletedElement[0].selector_type;
+
+      this.step.selectorPath = seletedElement[0].selector_path;
     },
   },
 };
