@@ -18,11 +18,19 @@
           <b-input v-model="url"></b-input>
         </div>
 
-        <label class="mb-2">Pre-script Scenario: {Scenario} </label>
+        <label class="mb-2"
+          >Pre-script Scenario:
+          <b-select
+            v-model="preScriptId"
+            :options="scenarios"
+            text-field="name"
+            value-field="id"
+          ></b-select>
+        </label>
       </div>
     </b-card>
 
-    <b-card class="card-elements">
+    <b-card class="card-elements mb-3">
       <template #header>
         <div class="d-flex justify-content-between align-items-center">
           <div class="h6 text-truncate mb-0">Elements</div>
@@ -41,8 +49,7 @@
           <img
             v-if="data.item.image"
             :src="data.item.image"
-            width="100"
-            height="50"
+            style="max-width: 100px; max-height: 100px"
           />
         </template>
 
@@ -63,6 +70,10 @@
         </template>
       </b-table>
     </b-card>
+
+    <div class="text-right">
+      <b-button variant="primary" @click="save">Save</b-button>
+    </div>
 
     <ElementEditModalVue ref="elementModal"></ElementEditModalVue>
   </div>
@@ -100,11 +111,16 @@ export default {
         { key: "actions", label: "Actions", thStyle: { width: "100px" } },
       ],
       isEdit: true,
+      scenarios: [],
     };
   },
 
-  mounted() {
-    this.getScreen(this.$route.params.id);
+  async mounted() {
+    this.getScreen(this.$route.params.screenId);
+    const res = await this.$axios.get(
+      `/scenarios?project_id=` + this.$route.params.id
+    );
+    this.scenarios = res.data;
   },
 
   computed: {
@@ -113,6 +129,8 @@ export default {
       name: "screen.name",
       url: "screen.url",
       elements: "screen.elements",
+      preScriptId: "screen.pre_script_id",
+      screen: "screen",
     }),
   },
   methods: {
@@ -144,6 +162,19 @@ export default {
         .catch((err) => {
           // An error occurred
         });
+    },
+
+    async save() {
+      try {
+        await this.$axios.put(
+          `/screens/${this.$route.params.screenId}`,
+          this.screen
+        );
+        this.getScreen(this.$route.params.screenId);
+        this.$toast.success("Successfully");
+      } catch {
+        this.$toast.error("Failed");
+      }
     },
   },
 };

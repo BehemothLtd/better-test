@@ -1,7 +1,9 @@
 module Api
   class ScenariosController < ApplicationController
     def index
-      render json: Scenario.all
+      scenarios = Scenario.all
+      scenarios.where(project_id: params[:project_id]) if params[:project_id]
+      render json: scenarios
     end
 
     def show

@@ -9,7 +9,8 @@ module Api
     def show
       screen = Screen.find(params[:id])
       elements = screen.elements
-      render json: screen.serializable_hash.merge(elements: elements)
+      pre_script = screen.pre_script
+      render json: screen.serializable_hash.merge(elements: elements, pre_script: pre_script)
     end
 
     def create
@@ -36,7 +37,7 @@ module Api
     end
 
     def screen_params
-      params.permit(:name, :project_id, :url, :auth_id)
+      params.permit(:name, :project_id, :url, :pre_script_id)
     end
   end
 end

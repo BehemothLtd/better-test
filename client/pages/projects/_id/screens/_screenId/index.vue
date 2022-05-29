@@ -20,7 +20,14 @@
 
         <div class="mb-2">Url: {{ screen.url }}</div>
 
-        <label class="mb-2">Pre-script Scenario: {Scenario} </label>
+        <label v-if="screen.pre_script" class="mb-2">
+          Pre-script Scenario:
+          <nuxt-link
+            :to="`/projects/${projectId}/scenarios/${screen.pre_script_id}`"
+          >
+            {{ screen.pre_script.name }}
+          </nuxt-link>
+        </label>
       </div>
     </b-card>
 
@@ -35,7 +42,13 @@
         :fields="elementFields"
         outlined
       >
-        <template #cell(index)="data">{{ data.index + 1 }}</template>
+        <template #cell(image)="data">
+          <img
+            v-if="data.item.image"
+            :src="data.item.image"
+            style="max-width: 100px; max-height: 100px"
+          />
+        </template>
       </b-table>
     </b-card>
 
@@ -65,7 +78,6 @@
         :fields="testCaseFields"
         outlined
       >
-        <template #cell(index)="data">{{ data.index + 1 }}</template>
         <template #cell(actions)="data">
           <b-button class="btnAction" variant="white">
             <i class="mdi mdi-pencil"></i>
@@ -88,12 +100,10 @@ export default {
   data() {
     return {
       elementFields: [
-        { key: "index", label: "Num" },
         { key: "image", label: "Element Image" },
         { key: "name", label: "Element Name" },
       ],
       testCaseFields: [
-        { key: "index", label: "Num" },
         { key: "name", label: "Test case" },
         { key: "actions", label: "Actions", thStyle: { width: "100px" } },
       ],

@@ -33,7 +33,11 @@
       </div>
     </div>
     <div class="text-center">
-      <img v-if="element.image" :src="element.image" width="200" height="200" />
+      <img
+        v-if="element.image"
+        :src="element.image"
+        style="max-width: 200px; max-height: 200px"
+      />
     </div>
     <div class="modal-footer mt-2 py-2">
       <b-button variant="primary" @click="submit">Submit</b-button>
@@ -69,7 +73,7 @@ export default {
   },
 
   computed: {
-    ...screenMapper.mapActions(["screen"]),
+    ...screenMapper.mapState(["screen"]),
     screen_id() {
       this.$route.params.screenId;
     },
@@ -99,7 +103,7 @@ export default {
         if (this.checkElement()) {
           const params = {
             url: this.screenUrl,
-            scenario_id: null,
+            scenario_id: this.screen.pre_script_id,
             selector_type: this.element.selector_type,
             selector_path: this.element.selector_path,
           };
@@ -113,6 +117,7 @@ export default {
           }
         }
       } catch (error) {
+        console.log(error);
         this.isBusy = false;
       }
     },
