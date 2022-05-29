@@ -52,7 +52,11 @@
           <tr>
             <th class="align-middle">Scenarios</th>
             <th class="text-right">
-              <b-button v-b-modal.modal-step variant="info" class="w-100px"
+              <b-button
+                v-b-modal.modal-step
+                variant="info"
+                class="w-100px"
+                :to="`/projects/${projectId}/scenarios/new`"
                 >New</b-button
               >
             </th>
