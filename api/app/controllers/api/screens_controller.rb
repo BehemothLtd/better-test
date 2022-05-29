@@ -1,7 +1,9 @@
 module Api
   class ScreensController < ApplicationController
     def index
-      render json: Screen.all
+      screens = Screen.all
+      screens = screens.where(project_id: params[:project_id]) if params[:project_id]
+      render json: screens
     end
 
     def show

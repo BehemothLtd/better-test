@@ -20,7 +20,7 @@ class ScenarioService
       Rails.logger.info step
       case step["command"]
       when "open"
-        @driver.get(step["selector_path"])
+        @driver.get(step["value"])
       when "click"
         el = @driver_wait.until { @driver.find_element(step["selector_type"], step["selector_path"]) }
         @driver.execute_script("arguments[0].scrollIntoView(true);", el)

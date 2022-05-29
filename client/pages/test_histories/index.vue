@@ -53,7 +53,7 @@ export default {
         { key: "status", label: "Status" },
         { key: "total", label: "Total" },
         { key: "passed_total", label: "Passed" },
-        { key: "failled_total", label: "Failled" },
+        { key: "failed_total", label: "Failed" },
         { key: "created_at", label: "Time" },
       ],
       options: [],
@@ -76,7 +76,7 @@ export default {
   methods: {
     async onOption(id) {
       try {
-        const screens = await this.$axios.get(`projects/${id}`);
+        const screens = await this.$axios.get(`screens?project_id=${id}`);
         this.screenOptions = screens.data;
         this.screenId = "";
       } catch (error) {}
