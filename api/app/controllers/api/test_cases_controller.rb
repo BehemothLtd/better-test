@@ -30,7 +30,7 @@ module Api
     private
 
     def test_case_params
-      params.permit(:name, :url, steps: %i[command selector_type selector_path value])
+      params.permit(:name, :url, steps: %i[command selector_type selector_path value element_id])
     end
   end
 end

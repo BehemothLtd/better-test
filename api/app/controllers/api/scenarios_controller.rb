@@ -30,7 +30,7 @@ module Api
     private
 
     def scenario_params
-      params.permit(:name, :url, :project_id, steps: %i[command selector_path selector_type value])
+      params.permit(:name, :url, :project_id, steps: %i[command selector_path selector_type value element_id])
     end
   end
 end

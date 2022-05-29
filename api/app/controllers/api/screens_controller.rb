@@ -14,7 +14,7 @@ module Api
     end
 
     def create
-      screen = Screen.create(screen_params)
+      screen = Screen.create(create_screen_params)
       render json: screen
     end
 
@@ -38,6 +38,11 @@ module Api
 
     def screen_params
       params.permit(:name, :project_id, :url, :pre_script_id)
+    end
+
+    def create_screen_params
+      params.permit(:name, :project_id, :url, :pre_script_id,
+                    elements_attributes: %i[name selector_type selector_path image])
     end
   end
 end
