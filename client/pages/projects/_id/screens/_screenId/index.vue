@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <div class="h6 text-truncate mb-0">SCREEN DETAIL</div>
       <nuxt-link
-        to="/screens/1"
+        :to="`/projects/${projectId}/screens/${screenId}/edit`"
         variant="white"
         class="p-2 cursor-pointer text-muted"
       >
@@ -43,10 +43,14 @@
       <template #header class="py-0 pr-0">
         <div class="d-flex justify-content-between align-items-center">
           <div class="h6 text-truncate mb-0">Test cases</div>
-          <div>
-            <b-button variant="white" class="p-2 cursor-pointer text-muted">
+          <div class="d-flex align-items-center">
+            <nuxt-link
+              :to="`/projects/${projectId}/screens/${screenId}/test_cases/new`"
+              variant="white"
+              class="p-2 cursor-pointer text-muted"
+            >
               <i class="mdi mdi-24px mdi mdi-plus-circle line-height-1"></i>
-            </b-button>
+            </nuxt-link>
             <b-button variant="white" class="p-2 cursor-pointer text-muted">
               <i class="mdi mdi-24px mdi mdi-play-circle line-height-1"></i>
             </b-button>
@@ -93,18 +97,19 @@ export default {
         { key: "name", label: "Test case" },
         { key: "actions", label: "Actions", thStyle: { width: "100px" } },
       ],
+      projectId: "",
+      screenId: "",
     };
   },
 
   mounted() {
     this.getScreen(this.$route.params.screenId);
     this.getTestCases();
+    this.projectId = this.$route.params.id;
+    this.screenId = this.$route.params.screenId;
   },
   computed: {
     ...mapState(["screen", "test_cases"]),
-    screenId() {
-      this.$route.params.id;
-    },
   },
   methods: {
     ...mapActions(["getScreen", "getTestCases"]),

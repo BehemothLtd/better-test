@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <h4 class="my-4 text-center">CREATE/UPDATE TESTCASE</h4>
+    <h4 class="my-4 text-center">CREATE/UPDATE SCENARIO</h4>
     <b-row class="align-items-center">
       <b-col sm="2">
         <label>Name</label>
       </b-col>
       <b-col sm="10">
         <b-input-group class="v-group mt-2 mb-1">
-          <b-input placeholder="Tên testcase"></b-input>
+          <b-input placeholder="Tên scenario"></b-input>
         </b-input-group>
       </b-col>
     </b-row>
@@ -28,7 +28,9 @@
         <label>Step</label>
       </b-col>
       <b-col sm="10">
-        <b-button v-b-modal.modal-step-testcase variant="dark">+ Add Step</b-button>
+        <b-button v-b-modal.modal-step-scenarios variant="dark"
+          >+ Add Step</b-button
+        >
       </b-col>
     </b-row>
 
@@ -39,33 +41,23 @@
       </b-col>
     </b-row>
 
-    <b-modal id="modal-step-testcase" modal-class="modal-type" hide-header>
-      <ModalStepTestcase></ModalStepTestcase>
+    <b-modal id="modal-step-scenarios" modal-class="modal-type" hide-header>
+      <b-row class="align-items-center">
+        <b-col sm="3">
+          <label>Element</label>
+        </b-col>
+        <b-col sm="9">
+          <b-form-select></b-form-select>
+        </b-col>
+      </b-row>
+      <ModalStepScenarios></ModalStepScenarios>
     </b-modal>
   </div>
 </template>
 <script>
-import ModalStepTestcase from "@/pages/projects/_id/screens/_id/test_cases/ModalStepTestcase.vue";
+import ModalStepScenarios from "~/components/common/ModalStepScenarios";
 export default {
-  data() {
-    return {
-      selected_action: "click",
-      selected_wait: "element",
-      actions: [
-        { value: "click", text: "Click" },
-        { value: "open", text: "Open" },
-        { value: "input", text: "Input" },
-        { value: "wait", text: "Wait" },
-        { value: "scenario", text: "Scenario" },
-        { value: "assert", text: "Assert" },
-      ],
-      waits: [
-        { value: "element", text: "Element" },
-        { value: "seconds", text: "Seconds" },
-      ],
-    };
-  },
-  components: { ModalStepTestcase },
+  components: { ModalStepScenarios },
   methods: {
     showModal() {
       this.$refs.modal - type.show();
