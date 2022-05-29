@@ -44,10 +44,12 @@
     </div>
   </b-modal>
 </template>
+
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("elements");
-const screenMapper = createNamespacedHelpers("screens");
+import _ from "lodash";
+
+const { mapActions } = createNamespacedHelpers("elements");
 
 export default {
   name: "elementModal",
@@ -73,7 +75,6 @@ export default {
   },
 
   computed: {
-    ...screenMapper.mapState(["screen"]),
     screen_id() {
       this.$route.params.screenId;
     },
@@ -84,6 +85,8 @@ export default {
     show(isEdit, data) {
       this.$refs.elementModal.show();
       this.screenUrl = data.url;
+      this.preScriptId = data.pre_script_id;
+      this.isEdit = isEdit;
 
       if (isEdit) {
         this.element.id = data.id;
@@ -92,7 +95,6 @@ export default {
         this.element.selector_path = data.selector_path;
         this.element.image = data.image;
         this.element.screen_id = data.screen_id;
-        this.isEdit = true;
       } else {
         this.resetModal();
       }
@@ -103,7 +105,7 @@ export default {
         if (this.checkElement()) {
           const params = {
             url: this.screenUrl,
-            scenario_id: this.screen.pre_script_id,
+            scenario_id: this.preScriptId,
             selector_type: this.element.selector_type,
             selector_path: this.element.selector_path,
           };
@@ -123,10 +125,12 @@ export default {
     },
 
     resetModal() {
-      this.element.name = "";
-      this.element.selector_path = "";
-      this.element.selector_type = "css";
-      this.element.image = "";
+      this.element = {
+        name: "",
+        selector_path: "",
+        selector_type: "css",
+        image: "",
+      };
       this.errors = [];
     },
 
@@ -134,23 +138,14 @@ export default {
       this.resetModal();
       this.$refs.elementModal.isVisible = false;
     },
-    async submit() {
+    submit() {
       if (this.checkElement()) {
         if (this.isEdit) {
-          const res = this.updateElement(this.element);
-          if (res) {
-            this.hide();
-            this.$toast.success("Successfully");
-          }
+          this.$emit("update", _.cloneDeep(this.element));
+          this.hide();
         } else {
-          const res = await this.createElement({
-            ...this.element,
-            screen_id: this.$route.params.screenId,
-          });
-          if (res) {
-            this.hide();
-            this.$toast.success("Successfully");
-          }
+          this.$emit("create", _.cloneDeep(this.element));
+          this.hide();
         }
       }
     },
