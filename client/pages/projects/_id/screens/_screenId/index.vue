@@ -64,7 +64,11 @@
             >
               <i class="mdi mdi-24px mdi mdi-plus-circle line-height-1"></i>
             </nuxt-link>
-            <b-button variant="white" class="p-2 cursor-pointer text-muted">
+            <b-button
+              variant="white"
+              class="p-2 cursor-pointer text-muted"
+              @click="runTestCases"
+            >
               <i class="mdi mdi-24px mdi mdi-play-circle line-height-1"></i>
             </b-button>
           </div>
@@ -123,6 +127,21 @@ export default {
   },
   methods: {
     ...mapActions(["getScreen", "getTestCases"]),
+
+    async runTestCases() {
+      const name = window.prompt("Please enter a name:");
+      if (name) {
+        try {
+          await this.$axios.post(`/screens/${this.screenId}/run_test_cases`, {
+            name,
+          });
+          this.$toast.success("Successfully");
+          this.$router.push("/test_histories");
+        } catch {
+          this.$toast.error("Failed");
+        }
+      }
+    },
   },
 };
 </script>

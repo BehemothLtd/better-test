@@ -5,7 +5,7 @@ module Api
 
       test_sessions = TestSession.all.where(screen_id: params[:screen_id]) if params[:screen_id]
       test_sessions = TestSession.all.where(project_id: params[:project_id]) if params[:project_id]
-      render json: test_sessions
+      render json: test_sessions.order(id: :desc)
     end
 
     def show
