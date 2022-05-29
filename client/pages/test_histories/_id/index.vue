@@ -26,7 +26,6 @@ export default {
         { key: "result", label: "Status" },
         { key: "created_at", label: "Time" },
       ],
-      test_session: [],
     };
   },
 
