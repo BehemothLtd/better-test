@@ -40,7 +40,11 @@
     <div class="table-scenarios mt-4">
       <div class="d-flex justify-content-between mb-2">
         <h5>Scenarios</h5>
-        <b-button v-b-modal.modal-step variant="dark">New</b-button>
+        <b-button
+          :to="`/projects/${projectId}/scenarios/new`"
+          variant="dark"
+          >New</b-button
+        >
       </div>
       <table class="table table-centered table-nowrap">
         <tbody>

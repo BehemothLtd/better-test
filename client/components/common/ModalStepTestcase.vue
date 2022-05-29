@@ -181,8 +181,14 @@ export default {
   methods: {
     async show(data) {
       const screenID = this.$route.params.screenId;
-      const res = await this.$axios.get(`screens/${screenID}`);
-      this.elementOptions = res.data.elements;
+      if (this.isScenario) {
+        const res = await this.$axios.get("elements");
+        this.elementOptions = res.data;
+      } else {
+        const res = await this.$axios.get(`screens/${screenID}`);
+        this.elementOptions = res.data.elements;
+      }
+
       this.editing = !!data;
       this.$refs.modal.show();
       if (data) {

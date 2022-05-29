@@ -65,6 +65,7 @@
 
     <ModalStepTestcase
       ref="stepTestCaseModal"
+      :is-scenario="isScenario"
       @create="onCreateStep"
       @update="onUpdateStep"
     ></ModalStepTestcase>
@@ -80,7 +81,12 @@ export default {
   },
 
   props: {
-    form: { type: Object, default: () => ({ steps: [] }) },
+    form: {
+      type: Object,
+      default: () => ({ steps: [] }),
+    },
+
+    isScenario: Boolean,
   },
 
   data() {

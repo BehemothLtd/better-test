@@ -1,5 +1,10 @@
 module Api
   class ElementsController < ApplicationController
+    def index
+      elements = Element.all
+      render json: elements
+    end
+
     def create
       element = Element.create!(element_params)
       render json: element
