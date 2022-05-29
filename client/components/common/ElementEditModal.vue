@@ -9,15 +9,15 @@
     <ul class="mb-2" v-if="errors.length">
       <li class="errors" v-for="error in errors">{{ error }}</li>
     </ul>
-    <label>Element Name <code>*</code></label>
+    <label class="font-weight-bold">Element Name <code>*</code></label>
     <b-input v-model="element.name" class="mb-2"></b-input>
-    <label>Select Type</label>
+    <label class="font-weight-bold">Select Type</label>
     <b-form-select
       v-model="element.selector_type"
       class="mb-2"
       :options="selectorOptions"
     ></b-form-select>
-    <label>Selector Path <code>*</code></label>
+    <label class="font-weight-bold">Selector Path <code>*</code></label>
     <b-input
       class="mb-2"
       v-model="element.selector_path"
@@ -25,8 +25,8 @@
     ></b-input>
     <div class="mt-2 mb-3">
       <div class="d-flex align-items-center">
-        <label class="mr-2 mb-0">Image</label>
-        <b-button size="sm" @click="onCapture" class="mr-2"
+        <label class="mr-2 mb-0 font-weight-bold">Image</label>
+        <b-button size="sm" @click="onCapture" class="mr-2" variant="outline-success"
           >Capture <i class="mdi mdi-image-search"></i>
         </b-button>
         <b-spinner v-if="isBusy" label="Spinning"></b-spinner>
@@ -40,7 +40,7 @@
       />
     </div>
     <div class="modal-footer mt-2 py-2">
-      <b-button variant="primary" @click="submit">Submit</b-button>
+      <b-button variant="success" @click="submit">Submit</b-button>
     </div>
   </b-modal>
 </template>
