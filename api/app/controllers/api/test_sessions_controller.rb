@@ -3,8 +3,8 @@ module Api
     def index
       test_sessions = TestSession.all
 
-      test_sessions = TestSession.all.where(screen_id: params[:screen_id]) if params[:screen_id]
-      test_sessions = TestSession.all.where(project_id: params[:project_id]) if params[:project_id]
+      test_sessions = TestSession.all.where(screen_id: params[:screen_id]) unless params[:screen_id].blank?
+      test_sessions = TestSession.all.where(project_id: params[:project_id]) unless params[:project_id].blank?
       render json: test_sessions
     end
 
