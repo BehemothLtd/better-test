@@ -12,13 +12,13 @@
             <td>{{ screen.name }}</td>
             <td class="text-right">
               <nuxt-link
-                :to="`/projects/${projectId}/screens/${detail.id}`"
+                :to="`/projects/${projectId}/screens/${screen.id}`"
                 class="mr-3 text-primary"
               >
                 <i class="mdi mdi-magnify font-size-20"></i>
               </nuxt-link>
               <nuxt-link
-                :to="`/projects/${projectId}/screens/${detail.id}/edit`"
+                :to="`/projects/${projectId}/screens/${screen.id}/edit`"
                 class="mr-3 text-primary"
               >
                 <i class="mdi mdi-pencil font-size-20"></i>
@@ -55,7 +55,6 @@
 export default {
   data() {
     return {
-      details: [],
       projectId: "",
       screens: [],
       scenarios: [],
@@ -65,7 +64,6 @@ export default {
   async mounted() {
     console.log(this.$route.params.id);
     const res = await this.$axios.get("/projects/" + this.$route.params.id);
-    this.details = res.data.screens;
     this.projectId = this.$route.params.id;
     this.screens = res.data.screens;
     this.scenarios = res.data.scenarios;
