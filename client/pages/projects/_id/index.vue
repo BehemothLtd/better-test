@@ -4,7 +4,9 @@
     <div class="table-screen">
       <div class="d-flex justify-content-between mb-2">
         <h5>Screen</h5>
-        <b-button v-b-modal.modal-step variant="dark">New</b-button>
+        <b-button :to="`/projects/${projectId}/screens/new`" variant="dark"
+          >New</b-button
+        >
       </div>
       <table class="table table-centered table-nowrap">
         <tbody>
