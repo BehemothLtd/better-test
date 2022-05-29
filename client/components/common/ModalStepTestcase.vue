@@ -1,5 +1,5 @@
 <template>
-  <b-modal ref="modal" @hide="hide" hide-header hide-footer>
+  <b-modal ref="modal" hide-header hide-footer>
     <b-row class="align-items-center mt-3">
       <b-col sm="3">
         <label>Action :</label>
@@ -97,6 +97,7 @@
   </b-modal>
 </template>
 <script>
+import _ from "lodash";
 export default {
   data() {
     return {
@@ -121,7 +122,7 @@ export default {
   },
   methods: {
     submit() {
-      this.$emit("submit", this.step);
+      this.$emit("submit", _.cloneDeep(this.step));
       this.hide();
     },
     resetModal() {

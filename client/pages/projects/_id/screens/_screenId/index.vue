@@ -83,12 +83,18 @@
         outlined
       >
         <template #cell(actions)="data">
-          <b-button class="btnAction" variant="white">
-            <i class="mdi mdi-pencil"></i>
-          </b-button>
-          <b-button class="btnAction" variant="white">
-            <i class="mdi mdi-delete"></i>
-          </b-button>
+          <div class="d-flex align-items-center">
+            <nuxt-link
+              :to="`/projects/${projectId}/screens/${screenId}/test_cases/${data.item.id}`"
+              class="btnAction"
+              variant="white"
+            >
+              <i class="mdi mdi-pencil"></i>
+            </nuxt-link>
+            <b-button class="btnAction" variant="white">
+              <i class="mdi mdi-delete"></i>
+            </b-button>
+          </div>
         </template>
       </b-table>
     </b-card>
@@ -117,10 +123,10 @@ export default {
   },
 
   mounted() {
-    this.getScreen(this.$route.params.screenId);
-    this.getTestCases();
-    this.projectId = this.$route.params.id;
     this.screenId = this.$route.params.screenId;
+    this.getScreen(this.$route.params.screenId);
+    this.getTestCases(this.$route.params.screenId);
+    this.projectId = this.$route.params.id;
   },
   computed: {
     ...mapState(["screen", "test_cases"]),
@@ -152,5 +158,8 @@ export default {
 ::v-deep.card-header {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+}
+a {
+  color: black;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h4 class="my-4 text-center">UPDATE TESTCASE</h4>
+    <h4 class="my-4 text-center">CREATE TESTCASE</h4>
     <b-row class="align-items-center">
       <b-col sm="2">
         <label>Name</label>
@@ -11,6 +11,7 @@
         </b-input-group>
       </b-col>
     </b-row>
+
     <b-row class="align-items-center mb-2">
       <b-col sm="2">
         <label>URL</label>
@@ -60,11 +61,10 @@
 import ModalStepTestcase from "~/components/common/ModalStepTestcase";
 export default {
   components: { ModalStepTestcase },
-  name: "TestCaseDetail",
+
   data() {
     return {
       testCase: {
-        id: null,
         steps: [],
         name: "",
         url: "",
@@ -76,25 +76,7 @@ export default {
   computed: {
     screenId() {
       this.$route.params.screenId;
-      console.log(this.$route.params);
     },
-  },
-
-  async mounted() {
-    const screenId = this.$route.params.screenId;
-    const testCaseId = this.$route.params.testcaseId;
-    const params = {
-      id: testCaseId,
-      screen_id: screenId,
-    };
-    const testCase = await this.$axios.get(
-      `/screens/${screenId}/test_cases/${testCaseId}`,
-      params
-    );
-    this.testCase.id = testCase.data.id;
-    this.testCase.steps = testCase.data.steps;
-    this.testCase.name = testCase.data.name;
-    this.testCase.url = testCase.data.url;
   },
 
   methods: {
@@ -108,10 +90,9 @@ export default {
     },
     async saveTestCase() {
       const screenId = this.$route.params.screenId;
-      const testCaseId = this.$route.params.testcaseId;
       try {
-        const res = await this.$axios.put(
-          `screens/${screenId}/test_cases/${testCaseId}`,
+        const res = await this.$axios.post(
+          `screens/${screenId}/test_cases`,
           this.testCase
         );
         if (res) {
@@ -120,6 +101,7 @@ export default {
       } catch (error) {}
     },
   },
+  mounted() {},
 };
 </script>
 <style>
