@@ -127,7 +127,7 @@ export default {
   },
 
   async mounted() {
-    await this.fetchScreen();
+    this.screen = await this.fetchScreen();
     const res = await this.$axios.get(
       `/scenarios?project_id=` + this.$route.params.id
     );
@@ -137,8 +137,8 @@ export default {
   methods: {
     async fetchScreen() {
       const res = await this.$axios.get(`screens/${this.screenId}`);
-      this.screen = res.data;
-      this.elements = this.screen.elements;
+      this.elements = res.data.elements;
+      return res.data;
     },
 
     createElement() {
@@ -163,7 +163,7 @@ export default {
           ...element,
           screen_id: this.screenId,
         });
-        this.elements.push(element);
+        this.fetchScreen();
         this.$toast.success("Successfully");
       } catch {
         this.$toast.error("Failed");
@@ -173,7 +173,7 @@ export default {
     async onUpdate(element) {
       try {
         await this.$axios.put("elements/" + element.id, element);
-        this.elements.splice(this.editingIndex, 1, element);
+        this.fetchScreen();
         this.$toast.success("Successfully");
       } catch {
         this.$toast.error("Failed");
@@ -196,7 +196,7 @@ export default {
         .then(async (value) => {
           if (value) {
             await this.$axios.delete("elements/" + element.id);
-            this.elements.splice(index, 1);
+            this.fetchScreen();
           }
         })
         .catch(() => {

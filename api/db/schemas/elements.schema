@@ -1,7 +1,7 @@
 create_table "elements", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
   t.string :name, null: false
   t.string :selector_type, null: false, default: :css
-  t.string :selector_path, null: false
+  t.text :selector_path, null: false
   t.string :image, null: true
   t.integer :screen_id, null: false
 

@@ -13,7 +13,7 @@ class RunTestCaseService
       project_id: @screen.project_id,
       screen_id: @screen.id,
       total: 1,
-      status: :running
+      status: :pending
     )
 
     ::RunTestCaseJob.perform_later(test_session.id, @test_case.id)

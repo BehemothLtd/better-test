@@ -6,18 +6,31 @@
       </div>
     </template>
 
-    <b-table responsive small :items="test_session" :fields="testSession">
-      <template #cell(index)="data">Case{{ data.index + 1 }} </template>
-    </b-table>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Case</th>
+          <th>Status</th>
+          <th>Time</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <TestCaseResultDetail
+        v-for="ts in test_session"
+        :key="ts.id"
+        :record="ts"
+      ></TestCaseResultDetail>
+    </table>
   </b-card>
 </template>
+
 <script>
+import TestCaseResultDetail from "@/components/common/TestCaseResultDetail";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions } = createNamespacedHelpers("test_histories");
 
 export default {
   name: "TestSection",
-
   data() {
     return {
       testSession: [
@@ -28,7 +41,6 @@ export default {
       ],
     };
   },
-
   created() {
     this.getTestSession(this.$route.params.id);
   },
@@ -38,5 +50,6 @@ export default {
   methods: {
     ...mapActions(["getTestSession"]),
   },
+  components: { TestCaseResultDetail },
 };
 </script>
