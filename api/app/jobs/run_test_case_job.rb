@@ -9,6 +9,12 @@ class RunTestCaseJob < ApplicationJob
 
     @driver = initialize_driver
 
+    test_session.update(status: :running)
+    history = test_session.run_histories.create(
+      test_case_id: test_case.id,
+      result: :pending
+    )
+
     if screen.pre_script.present?
       begin
         service = ::ScenarioService.new(@driver, screen.pre_script)
@@ -23,8 +29,8 @@ class RunTestCaseJob < ApplicationJob
 
     service = ::ScenarioService.new(@driver, test_case)
     service.execute!
-    test_session.run_histories.create(
-      test_case_id: test_case.id,
+
+    history.update(
       result: service.result,
       message: service.message
     )

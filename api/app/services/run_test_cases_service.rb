@@ -15,7 +15,7 @@ class RunTestCasesService
       project_id: @screen.project_id,
       screen_id: @screen.id,
       total: @test_cases.length,
-      status: :running
+      status: :pending
     )
 
     @test_cases.each do |test_case|
