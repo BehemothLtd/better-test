@@ -9,7 +9,7 @@
         variant="white"
         class="p-2 cursor-pointer text-danger"
       >
-        <i class="mdi mdi-24px mdi mdi-pencil line-height-1"></i>
+        <i class="mdi mdi-24px mdi-pencil line-height-1 text-danger"></i>
       </nuxt-link>
     </div>
     <b-card class="mb-3">
@@ -93,21 +93,21 @@
               class="btnAction"
               variant="white"
             >
-              <i class="mdi mdi-pencil"></i>
+              <i class="mdi mdi-pencil text-danger"></i>
             </nuxt-link>
             <b-button
               class="btnAction"
               variant="white ml-2"
               @click="deleteTestCase(data.item.id)"
             >
-              <i class="mdi mdi-delete"></i>
+              <i class="mdi mdi-delete text-danger"></i>
             </b-button>
             <span
               role="button"
               class="ml-2"
               @click="runTestCase(data.item.id, data.item.name)"
             >
-              <i class="mdi mdi-play-circle"></i>
+              <i class="mdi mdi-play-circle text-danger"></i>
             </span>
           </div>
         </template>
