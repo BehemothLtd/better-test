@@ -1,6 +1,8 @@
 require "selenium-webdriver"
 
 class RunTestCasesService
+  attr_reader :test_session_id
+
   def initialize(screen_id, name)
     @name = name
     @screen = Screen.find(screen_id)
@@ -17,6 +19,8 @@ class RunTestCasesService
       total: @test_cases.length,
       status: :pending
     )
+
+    @test_session_id = test_session.id
 
     @test_cases.each do |test_case|
       ::RunTestCaseJob.perform_later(test_session.id, test_case.id)

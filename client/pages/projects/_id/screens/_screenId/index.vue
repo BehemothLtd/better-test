@@ -153,11 +153,12 @@ export default {
       const name = window.prompt("Please enter a name:");
       if (name) {
         try {
-          await this.$axios.post(`/screens/${this.screenId}/run_test_cases`, {
-            name,
-          });
+          const res = await this.$axios.post(
+            `/screens/${this.screenId}/run_test_cases`,
+            { name }
+          );
           this.$toast.success("Successfully");
-          this.$router.push("/test_histories");
+          this.$router.push("/test_histories/" + res.data.test_session_id);
         } catch {
           this.$toast.error("Failed");
         }
@@ -176,11 +177,11 @@ export default {
 
     async runTestCase(id, name) {
       try {
-        await this.$axios.post(`/test_cases/${id}/run`, {
+        const res = await this.$axios.post(`/test_cases/${id}/run`, {
           name: `Run ${name}`,
         });
         this.$toast.success("Successfully");
-        this.$router.push("/test_histories");
+        this.$router.push("/test_histories/" + res.data.test_session_id);
       } catch {
         this.$toast.error("Failed");
       }

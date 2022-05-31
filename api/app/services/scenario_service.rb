@@ -2,13 +2,14 @@ require "selenium-webdriver"
 require "json"
 
 class ScenarioService
-  attr_reader :result, :message, :index
+  attr_reader :result, :message, :index, :images
 
   def initialize(driver, test_case)
     @driver = driver
     @driver_wait = Selenium::WebDriver::Wait.new(timeout: 10)
     @test_case = test_case
     @index = 0
+    @images = []
   end
 
   def execute!
@@ -36,6 +37,7 @@ class ScenarioService
         if service.result == :failed
           @result = :failed
           @message = "Step #{index}: Scenario #{el.name} failed"
+          @images += service.images
           break
         end
       when "wait"
@@ -53,10 +55,13 @@ class ScenarioService
         end
       end
 
-      # path = "images/#{SecureRandom.alphanumeric(8)}.jpg"
-      # full_path = Rails.root.join("public/#{path}")
-      # @driver.find_element(tag_name: "body").save_screenshot(full_path)
-      # puts "#{ENV['API_HOST']}/#{path}"
+      path = "images/#{SecureRandom.alphanumeric(8)}.jpg"
+      full_path = Rails.root.join("public/#{path}")
+      @driver.find_element(tag_name: "body").save_screenshot(full_path)
+      @images << {
+        step: index + 1,
+        image: "#{ENV['API_HOST']}/#{path}"
+      }
     end
 
     @result = :passed

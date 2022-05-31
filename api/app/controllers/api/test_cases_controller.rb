@@ -30,7 +30,7 @@ module Api
     def run
       service = ::RunTestCaseService.new(params[:id], params[:name])
       service.execute!
-      render json: :ok
+      render json: { test_session_id: service.test_session_id }
     end
 
     private

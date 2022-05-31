@@ -26,7 +26,7 @@ class CaptureImageService
     path = "images/#{SecureRandom.alphanumeric(8)}.jpg"
     full_path = Rails.root.join("public/#{path}")
     ele = ele.find_element(:xpath, "./..") if %w[input select].include?(ele.tag_name)
-    sleep(0.5)
+    sleep(3)
     ele.save_screenshot(full_path)
     @result = { url: "#{ENV['API_HOST']}/#{path}" }
   ensure

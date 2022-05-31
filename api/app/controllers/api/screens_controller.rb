@@ -33,7 +33,7 @@ module Api
     def run_test_cases
       service = ::RunTestCasesService.new(params[:id], params[:name])
       service.execute!
-      render json: :ok
+      render json: { test_session_id: service.test_session_id }
     end
 
     def screen_params

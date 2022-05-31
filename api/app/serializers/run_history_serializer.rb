@@ -1,5 +1,5 @@
 class RunHistorySerializer < ActiveModel::Serializer
-  attributes :result, :test_case_id, :test_case_name, :created_at, :message, :project_id, :screen_id
+  attributes :result, :test_case_id, :test_case_name, :created_at, :message, :project_id, :screen_id, :images
   belongs_to :test_case, serializer: ::TestCaseSerializer
 
   def test_case_name

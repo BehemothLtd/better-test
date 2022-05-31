@@ -12,17 +12,26 @@ class RunTestCaseJob < ApplicationJob
     test_session.update(status: :running)
     history = test_session.run_histories.create(
       test_case_id: test_case.id,
-      result: :pending
+      result: :pending,
+      images: []
     )
 
     if screen.pre_script.present?
       begin
         service = ::ScenarioService.new(@driver, screen.pre_script)
         service.execute!
-        raise "failed" if service.result == :failed
-      rescue StandardError
+        if service.result == :failed
+          @images = service.images
+          raise service.message
+        end
+      rescue StandardError => e
         test_session.status = :pre_script_failed
         test_session.save
+        history.update(
+          result: :failed,
+          message: e.message,
+          images: @images
+        )
         return
       end
     end
@@ -32,7 +41,8 @@ class RunTestCaseJob < ApplicationJob
 
     history.update(
       result: service.result,
-      message: service.message
+      message: service.message,
+      images: service.images
     )
 
     case service.result

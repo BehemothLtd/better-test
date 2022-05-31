@@ -3,6 +3,7 @@ create_table "run_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT C
   t.integer :result
   t.integer :test_session_id
   t.text :message
+  t.text :images, size: :medium
 
   t.timestamps
 end

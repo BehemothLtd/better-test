@@ -21,6 +21,25 @@
         <div v-if="record.message" class="text-danger">
           {{ record.message }}
         </div>
+
+        <div v-if="record.images.length">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(image, i) in record.images" :key="i">
+                <td>{{ image.step }}</td>
+                <td>
+                  <a :href="image.image" target="_blank">{{ image.image }}</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </td>
     </tr>
   </tbody>

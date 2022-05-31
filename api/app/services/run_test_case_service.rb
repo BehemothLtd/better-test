@@ -1,6 +1,8 @@
 require "selenium-webdriver"
 
 class RunTestCaseService
+  attr_reader :test_session_id
+
   def initialize(test_case_id, name)
     @name = name
     @test_case = TestCase.find(test_case_id)
@@ -15,6 +17,8 @@ class RunTestCaseService
       total: 1,
       status: :pending
     )
+
+    @test_session_id = test_session.id
 
     ::RunTestCaseJob.perform_later(test_session.id, @test_case.id)
   end
